@@ -2,916 +2,382 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CA Bar — Evidence Flashcards</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Leeool Bar Prep</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0f0e0c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Leeool Bar">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #0f0e0c;
-  --surface: #1a1916;
-  --surface2: #222120;
-  --surface3: #2a2927;
-  --border: #333230;
-  --border2: #3d3c39;
-  --text: #e8e4dc;
-  --text2: #a09b90;
-  --text3: #6b6560;
-  --gold: #c9a96e;
-  --gold2: #e2c48a;
-  --gold-dim: rgba(201,169,110,0.12);
-  --green: #5a8f6a;
-  --green-bg: rgba(90,143,106,0.12);
-  --amber: #c47f3a;
-  --amber-bg: rgba(196,127,58,0.12);
-  --red: #a85555;
-  --red-bg: rgba(168,85,85,0.12);
-  --blue: #5a7ea8;
-  --blue-bg: rgba(90,126,168,0.12);
-  --purple: #8a6fa8;
-  --purple-bg: rgba(138,111,168,0.12);
-  --radius: 12px;
-  --radius-sm: 7px;
-  --shadow: 0 4px 32px rgba(0,0,0,0.6);
+  --color-background-primary: #1a1916;
+  --color-background-secondary: #222120;
+  --color-background-tertiary: #2a2927;
+  --color-background-success: rgba(90,143,106,0.15);
+  --color-background-warning: rgba(196,127,58,0.15);
+  --color-background-danger: rgba(168,85,85,0.15);
+  --color-text-primary: #e8e4dc;
+  --color-text-secondary: #a09b90;
+  --color-text-tertiary: #6b6560;
+  --color-text-success: #5a8f6a;
+  --color-text-warning: #c47f3a;
+  --color-text-danger: #a85555;
+  --color-border-primary: #3d3c39;
+  --color-border-secondary: #333230;
+  --color-border-tertiary: #2a2927;
+  --color-border-success: rgba(90,143,106,0.5);
+  --color-border-warning: rgba(196,127,58,0.5);
+  --color-border-danger: rgba(168,85,85,0.5);
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
 }
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { height: 100%; }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ── Layout ── */
-.app { display: flex; flex-direction: column; min-height: 100vh; max-width: 860px; margin: 0 auto; padding: 0 1rem; width: 100%; }
-
-/* ── Header ── */
-header {
-  padding: 1.5rem 0 1rem;
-  display: flex; align-items: baseline; gap: 1rem;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 1.25rem;
-}
-.logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.35rem;
-  color: var(--gold);
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-}
-.subject-badge {
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text3);
-  border: 1px solid var(--border);
-  padding: 3px 8px;
-  border-radius: 20px;
-}
-
-/* ── Controls bar ── */
-.controls {
-  display: flex; gap: 8px; flex-wrap: wrap;
-  margin-bottom: 1rem;
-  align-items: center;
-}
-.search-wrap {
-  flex: 1; min-width: 180px; position: relative;
-}
-.search-wrap input {
-  width: 100%;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  padding: 8px 12px 8px 34px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.search-wrap input:focus { border-color: var(--gold); }
-.search-icon {
-  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
-  color: var(--text3); font-size: 0.85rem; pointer-events: none;
-}
-.pill-group { display: flex; gap: 4px; flex-wrap: wrap; }
-.pill {
-  font-size: 0.78rem; padding: 6px 12px;
-  border-radius: 20px; border: 1px solid var(--border);
-  background: transparent; color: var(--text2);
-  cursor: pointer; transition: all 0.15s; white-space: nowrap;
-  font-family: 'DM Sans', sans-serif;
-}
-.pill:hover { border-color: var(--border2); color: var(--text); }
-.pill.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
-.pill.freq-high.active { background: var(--red-bg); border-color: var(--red); color: var(--red); }
-.pill.freq-mid.active { background: var(--amber-bg); border-color: var(--amber); color: var(--amber); }
-.pill.freq-low.active { background: var(--green-bg); border-color: var(--green); color: var(--green); }
-
-/* ── Stats row ── */
-.stats {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 8px; margin-bottom: 1.25rem;
-}
-.stat {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 10px 12px; text-align: center;
-}
-.stat-n { font-size: 1.4rem; font-weight: 500; font-family: 'DM Mono', monospace; }
-.stat-l { font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); margin-top: 2px; }
-.stat-n.gold { color: var(--gold); }
-.stat-n.green { color: var(--green); }
-.stat-n.amber { color: var(--amber); }
-.stat-n.red { color: var(--red); }
-
-/* ── Progress ── */
-.prog-wrap { height: 2px; background: var(--surface2); border-radius: 2px; margin-bottom: 1.5rem; }
-.prog-fill { height: 2px; background: var(--gold); border-radius: 2px; transition: width 0.4s ease; }
-
-/* ── Mode tabs ── */
-.mode-tabs { display: flex; gap: 4px; margin-bottom: 1.25rem; }
-.mode-tab {
-  font-size: 0.82rem; padding: 7px 16px;
-  border-radius: var(--radius-sm); border: 1px solid var(--border);
-  background: transparent; color: var(--text2);
-  cursor: pointer; transition: all 0.15s;
-  font-family: 'DM Sans', sans-serif;
-}
-.mode-tab:hover { color: var(--text); border-color: var(--border2); }
-.mode-tab.active {
-  background: var(--gold-dim); border-color: var(--gold); color: var(--gold);
-}
-
-/* ── Card ── */
-.card-wrap { perspective: 1200px; margin-bottom: 0.75rem; cursor: pointer; }
-.card-inner {
-  position: relative; min-height: 280px;
-  transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(.4,0,.2,1);
-}
-.card-inner.flipped { transform: rotateY(180deg); }
-.card-face {
-  position: absolute; width: 100%; min-height: 280px;
-  backface-visibility: hidden;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.75rem;
-  display: flex; flex-direction: column;
-  box-shadow: var(--shadow);
-}
-.card-back { transform: rotateY(180deg); }
-
-.card-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
-.freq-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  display: inline-block; flex-shrink: 0;
-}
-.freq-dot.high { background: var(--red); }
-.freq-dot.mid, .freq-dot.med { background: var(--amber); }
-.freq-dot.low { background: var(--green); }
-.card-subject-tag {
-  font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--text3); border: 1px solid var(--border); padding: 2px 7px; border-radius: 20px;
-}
-.card-num { font-size: 0.72rem; color: var(--text3); margin-left: auto; font-family: 'DM Mono', monospace; }
-
-.card-label {
-  font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 0.6rem;
-}
-.card-issue {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.5rem; line-height: 1.35;
-  color: var(--text); flex: 1;
-  display: flex; align-items: center;
-}
-.flip-hint {
-  font-size: 0.72rem; color: var(--text3); text-align: center;
-  margin-top: 1.5rem; letter-spacing: 0.04em;
-}
-
-/* Rule rendering */
-.rule-body {
-  font-size: 0.875rem; line-height: 1.75;
-  color: var(--text2); flex: 1;
-  overflow-y: auto; max-height: 340px;
-}
-.rule-body p { margin-bottom: 0.6rem; }
-.rule-body ol, .rule-body ul { padding-left: 1.4rem; margin-bottom: 0.6rem; }
-.rule-body li { margin-bottom: 0.3rem; }
-.rule-body strong { color: var(--text); font-weight: 500; }
-.rule-body em { color: var(--gold); font-style: italic; }
-.rule-body hr { border: none; border-top: 1px solid var(--border); margin: 0.75rem 0; }
-
-/* Extras section */
-.extras {
-  margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);
-  display: flex; gap: 1rem; flex-wrap: wrap;
-}
-.extra-block { flex: 1; min-width: 140px; }
-.extra-label {
-  font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
-  margin-bottom: 0.4rem;
-}
-.extra-label.mnemonic { color: var(--purple); }
-.extra-label.trigger { color: var(--blue); }
-.extra-val { font-size: 0.8rem; line-height: 1.5; }
-.extra-val.mnemonic { color: var(--purple); font-family: 'DM Mono', monospace; }
-.extra-val.trigger { color: var(--blue); }
-
-/* ── Nav ── */
-.nav-row {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 1rem;
-}
-.nav-btn {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.82rem; padding: 8px 18px;
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-  background: transparent; color: var(--text2);
-  cursor: pointer; transition: all 0.15s;
-}
-.nav-btn:hover { border-color: var(--border2); color: var(--text); }
-.card-counter {
-  flex: 1; text-align: center;
-  font-size: 0.82rem; color: var(--text3);
-  font-family: 'DM Mono', monospace;
-}
-
-/* ── Action buttons ── */
-.actions {
-  display: flex; gap: 8px; justify-content: center;
-  flex-wrap: wrap; margin-bottom: 1.5rem;
-}
-.action-btn {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.8rem; padding: 8px 18px;
-  border-radius: var(--radius-sm); border: 1px solid;
-  cursor: pointer; transition: all 0.15s; font-weight: 500;
-}
-.action-btn.mastered { background: var(--green-bg); border-color: var(--green); color: var(--green); }
-.action-btn.review   { background: var(--amber-bg); border-color: var(--amber); color: var(--amber); }
-.action-btn.due      { background: var(--red-bg); border-color: var(--red); color: var(--red); }
-.action-btn:hover { filter: brightness(1.2); }
-
-/* ── Recall mode ── */
-.recall-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 1.75rem;
-  margin-bottom: 0.75rem; box-shadow: var(--shadow);
-}
-.recall-issue {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.35rem; line-height: 1.35; margin-bottom: 1.25rem;
-  color: var(--text);
-}
-.recall-prompt { font-size: 0.75rem; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.6rem; }
-.recall-input {
-  width: 100%; min-height: 120px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); color: var(--text);
-  font-family: 'DM Sans', sans-serif; font-size: 0.875rem; line-height: 1.6;
-  padding: 12px 14px; resize: vertical; outline: none;
-  transition: border-color 0.2s;
-}
-.recall-input:focus { border-color: var(--gold); }
-.check-btn {
-  font-family: 'DM Sans', sans-serif;
-  margin-top: 10px; font-size: 0.82rem; padding: 8px 20px;
-  background: var(--gold-dim); border: 1px solid var(--gold);
-  color: var(--gold); border-radius: var(--radius-sm);
-  cursor: pointer; transition: all 0.15s;
-}
-.check-btn:hover { background: rgba(201,169,110,0.22); }
-
-.feedback {
-  margin-top: 1rem; padding: 14px 16px;
-  border-radius: var(--radius-sm); font-size: 0.85rem; line-height: 1.65;
-  display: none;
-}
-.feedback.good   { background: var(--green-bg);  border: 1px solid var(--green);  color: var(--text); }
-.feedback.partial{ background: var(--amber-bg);  border: 1px solid var(--amber);  color: var(--text); }
-.feedback.miss   { background: var(--red-bg);    border: 1px solid var(--red);    color: var(--text); }
-
-.fb-score { font-size: 1.2rem; font-weight: 500; margin-bottom: 6px; }
-.fb-score.good { color: var(--green); }
-.fb-score.partial { color: var(--amber); }
-.fb-score.miss { color: var(--red); }
-
-.kw-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
-.kw-tag {
-  font-size: 0.72rem; padding: 3px 9px; border-radius: 20px;
-  border: 1px solid;
-}
-.kw-tag.hit  { background: var(--green-bg); border-color: var(--green); color: var(--green); }
-.kw-tag.miss { background: var(--red-bg); border-color: var(--red); color: var(--red); opacity: 0.7; }
-
-/* Reveal rule after check */
-.rule-reveal {
-  margin-top: 1rem; padding: 14px 16px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); display: none;
-}
-.rule-reveal .extra-label { color: var(--gold); margin-bottom: 8px; }
-
-/* ── Edit mode panel ── */
-.edit-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.75);
-  z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem;
-}
-.edit-overlay.open { display: flex; }
-.edit-panel {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); width: 100%; max-width: 700px;
-  max-height: 90vh; overflow-y: auto;
-  box-shadow: var(--shadow);
-  display: flex; flex-direction: column;
-}
-.edit-header {
-  padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center;
-  position: sticky; top: 0; background: var(--surface); z-index: 1;
-}
-.edit-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); }
-.edit-close {
-  background: none; border: none; color: var(--text2); font-size: 1.3rem;
-  cursor: pointer; line-height: 1;
-}
-.edit-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
-.edit-field label {
-  display: block; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--text3); margin-bottom: 6px;
-}
-.edit-field textarea, .edit-field input, .edit-field select {
-  width: 100%;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); color: var(--text);
-  font-family: 'DM Sans', sans-serif; font-size: 0.875rem;
-  padding: 10px 12px; outline: none; transition: border-color 0.2s;
-}
-.edit-field textarea { min-height: 140px; resize: vertical; line-height: 1.6; }
-.edit-field input:focus, .edit-field textarea:focus, .edit-field select:focus { border-color: var(--gold); }
-.edit-field select option { background: var(--surface2); }
-.edit-save {
-  font-family: 'DM Sans', sans-serif;
-  padding: 10px 24px; background: var(--gold-dim);
-  border: 1px solid var(--gold); color: var(--gold);
-  border-radius: var(--radius-sm); cursor: pointer;
-  font-size: 0.85rem; font-weight: 500; transition: all 0.15s;
-  align-self: flex-end;
-}
-.edit-save:hover { background: rgba(201,169,110,0.25); }
-.md-hint { font-size: 0.72rem; color: var(--text3); margin-top: 4px; }
-
-.edit-btn {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.75rem; padding: 5px 12px;
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-  background: transparent; color: var(--text3); cursor: pointer;
-  transition: all 0.15s;
-}
-.edit-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-.srs-chip {
-  font-size: 0.72rem; color: var(--text3);
-  text-align: center; margin-bottom: 0.5rem;
-  letter-spacing: 0.04em;
-}
-
-footer { padding: 1.5rem 0; text-align: center; font-size: 0.72rem; color: var(--text3); border-top: 1px solid var(--border); margin-top: auto; }
-
-@media (max-width: 600px) {
-  .card-issue { font-size: 1.25rem; }
-  .stats { grid-template-columns: repeat(2, 1fr); }
-  .extras { flex-direction: column; }
-}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--color-text-primary);font-family:var(--font-sans)}
+body{max-width:680px;margin:0 auto;padding:0 1rem 2rem}
+.app{padding:.75rem 0}
+.hdr{display:flex;align-items:baseline;gap:.6rem;padding-bottom:.8rem;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1rem}
+.logo{font-size:1.15rem;font-weight:500;color:var(--color-text-primary)}
+.subj-tag{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-tertiary);border:0.5px solid var(--color-border-tertiary);padding:2px 8px;border-radius:20px}
+.tabs{display:flex;gap:4px;margin-bottom:1rem}
+.tab{font-size:.8rem;padding:6px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:transparent;color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-sans)}
+.tab.on{background:var(--color-background-secondary);border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:.8rem}
+.cmeta{display:flex;gap:7px;align-items:center;margin-bottom:.8rem;flex-wrap:wrap}
+.freq{font-size:.68rem;font-weight:500;padding:2px 8px;border-radius:20px;border:0.5px solid;text-transform:uppercase}
+.freq.high{background:var(--color-background-danger);border-color:var(--color-border-danger);color:var(--color-text-danger)}
+.freq.mid{background:var(--color-background-warning);border-color:var(--color-border-warning);color:var(--color-text-warning)}
+.freq.low{background:var(--color-background-success);border-color:var(--color-border-success);color:var(--color-text-success)}
+.ctag{font-size:.68rem;color:var(--color-text-tertiary);border:0.5px solid var(--color-border-tertiary);padding:2px 7px;border-radius:20px}
+.cnum{font-size:.68rem;color:var(--color-text-tertiary);margin-left:auto;font-family:var(--font-mono)}
+.issue{font-size:1.1rem;font-weight:500;color:var(--color-text-primary);margin-bottom:.8rem;line-height:1.3}
+.flip-wrap{cursor:pointer;perspective:1000px;margin-bottom:.5rem}
+.flip-inner{position:relative;min-height:220px;transform-style:preserve-3d;transition:transform .45s}
+.flip-inner.flipped{transform:rotateY(180deg)}
+.flip-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:1.25rem;display:flex;flex-direction:column}
+.flip-back{transform:rotateY(180deg)}
+.flbl{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.5rem}
+.fissue{font-size:1.2rem;font-weight:500;color:var(--color-text-primary);flex:1;display:flex;align-items:center;line-height:1.3}
+.fhint{font-size:.72rem;color:var(--color-text-tertiary);text-align:center;margin-top:1rem}
+.frule{font-size:.875rem;line-height:1.75;color:var(--color-text-secondary);flex:1;overflow-y:auto;max-height:280px}
+.frule p{margin-bottom:.4rem}
+.frule strong{color:var(--color-text-primary);font-weight:500}
+.frule em{font-style:italic}
+.frule ol,.frule ul{padding-left:1.3rem;margin-bottom:.4rem}
+.frule li{margin-bottom:.2rem}
+.ex-lbl{font-size:.63rem;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.3rem;margin-top:.8rem}
+.ex-val{font-size:.8rem;line-height:1.5;color:var(--color-text-secondary);font-family:var(--font-mono)}
+.note-lbl{font-size:.63rem;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin-top:.8rem;margin-bottom:.3rem;padding-top:.8rem;border-top:0.5px solid var(--color-border-tertiary)}
+.note-area{width:100%;min-height:55px;font-family:var(--font-sans);font-size:.82rem;padding:8px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);resize:vertical;outline:none;display:block}
+.note-area:focus{border-color:var(--color-border-primary)}
+.note-btn{font-size:.72rem;padding:4px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:transparent;color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-sans);margin-top:5px}
+.note-btn:hover{color:var(--color-text-primary)}
+.srs{font-size:.7rem;color:var(--color-text-tertiary);text-align:center;margin-bottom:.5rem}
+.rlbl{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.4rem}
+.rinp{width:100%;min-height:110px;font-family:var(--font-sans);font-size:.875rem;line-height:1.6;padding:10px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);resize:vertical;outline:none;display:block}
+.rinp:focus{border-color:var(--color-border-primary)}
+.ckbtn{font-family:var(--font-sans);font-size:.82rem;padding:8px 18px;border:0.5px solid var(--color-border-primary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);cursor:pointer;margin-top:8px}
+.ckbtn:hover{background:var(--color-background-tertiary)}
+.ckbtn:disabled{opacity:.4;cursor:not-allowed}
+.fb{margin-top:1rem;border-radius:var(--border-radius-md);overflow:hidden}
+.fbtop{padding:12px 16px;display:flex;align-items:center;gap:14px}
+.fbtop.g{background:var(--color-background-success);border:0.5px solid var(--color-border-success)}
+.fbtop.p{background:var(--color-background-warning);border:0.5px solid var(--color-border-warning)}
+.fbtop.m{background:var(--color-background-danger);border:0.5px solid var(--color-border-danger)}
+.fbpct{font-size:1.8rem;font-weight:500;font-family:var(--font-mono)}
+.fbpct.g{color:var(--color-text-success)}
+.fbpct.p{color:var(--color-text-warning)}
+.fbpct.m{color:var(--color-text-danger)}
+.fbv{font-size:.9rem;font-weight:500;color:var(--color-text-primary)}
+.fbs2{font-size:.78rem;color:var(--color-text-secondary);margin-top:2px}
+.fbbody{padding:12px 16px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-top:none}
+.kl{font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.35rem;margin-top:.5rem}
+.kl:first-child{margin-top:0}
+.ktags{display:flex;flex-wrap:wrap;gap:4px}
+.ktag{font-size:.7rem;padding:2px 8px;border-radius:20px;border:0.5px solid}
+.ktag.h{background:var(--color-background-success);border-color:var(--color-border-success);color:var(--color-text-success)}
+.ktag.m2{background:var(--color-background-danger);border-color:var(--color-border-danger);color:var(--color-text-danger);opacity:.8}
+.again{font-size:.8rem;padding:.5rem .8rem;margin-top:.6rem;background:var(--color-background-warning);border:0.5px solid var(--color-border-warning);color:var(--color-text-warning);border-radius:var(--border-radius-md)}
+.rbox{margin-top:.8rem;padding:12px 14px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md)}
+.rboxlbl{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.5rem}
+.nav{display:flex;align-items:center;gap:8px;margin-bottom:.8rem}
+.navbtn{font-size:.8rem;padding:7px 16px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:transparent;color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-sans)}
+.navbtn:hover{color:var(--color-text-primary);border-color:var(--color-border-primary)}
+.navctr{flex:1;text-align:center;font-size:.8rem;color:var(--color-text-tertiary);font-family:var(--font-mono)}
+.acts{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.actbtn{font-size:.78rem;padding:7px 16px;border-radius:var(--border-radius-md);border:0.5px solid;cursor:pointer;font-family:var(--font-sans);font-weight:500}
+.actbtn.ms{background:var(--color-background-success);border-color:var(--color-border-success);color:var(--color-text-success)}
+.actbtn.rv{background:var(--color-background-warning);border-color:var(--color-border-warning);color:var(--color-text-warning)}
+.actbtn.du{background:var(--color-background-danger);border-color:var(--color-border-danger);color:var(--color-text-danger)}
 </style>
-  <meta name="theme-color" content="#0f0e0c">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Bar Prep">
-  <link rel="apple-touch-icon" href="/icon-192.png">
 </head>
 <body>
 <div class="app">
-
-<header>
-  <div class="logo">CA Bar Prep</div>
-  <div class="subject-badge">Evidence</div>
-</header>
-
-<!-- Controls -->
-<div class="controls">
-  <div class="search-wrap">
-    <span class="search-icon">⌕</span>
-    <input type="text" id="searchInput" placeholder="Search issues..." oninput="applyFilters()">
-  </div>
-  <div class="pill-group" id="freqFilters">
-    <button class="pill active" onclick="setFreq('all',this)">All</button>
-    <button class="pill freq-high" onclick="setFreq('high',this)">● High</button>
-    <button class="pill freq-mid" onclick="setFreq('mid',this)">● Mid</button>
-    <button class="pill freq-low" onclick="setFreq('low',this)">● Low</button>
-  </div>
-  <div class="pill-group" id="statusFilters">
-    <button class="pill active" onclick="setStatus('all',this)">All</button>
-    <button class="pill" onclick="setStatus('due',this)">Due</button>
-    <button class="pill" onclick="setStatus('review',this)">Review</button>
-    <button class="pill" onclick="setStatus('mastered',this)">Mastered</button>
-  </div>
+<div class="hdr">
+  <div class="logo">Leeool Bar Prep</div>
+  <div class="subj-tag">Evidence</div>
+</div>
+<div class="tabs">
+  <button class="tab on" id="tabFlip">Flashcard</button>
+  <button class="tab" id="tabRecall">Recall</button>
 </div>
 
-<!-- Stats -->
-<div class="stats">
-  <div class="stat"><div class="stat-n gold" id="sTotal">—</div><div class="stat-l">Cards</div></div>
-  <div class="stat"><div class="stat-n green" id="sMastered">—</div><div class="stat-l">Mastered</div></div>
-  <div class="stat"><div class="stat-n amber" id="sReview">—</div><div class="stat-l">Review</div></div>
-  <div class="stat"><div class="stat-n red" id="sDue">—</div><div class="stat-l">Due</div></div>
-</div>
-<div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
-
-<!-- Mode tabs -->
-<div class="mode-tabs">
-  <button class="mode-tab active" onclick="setMode('flip',this)">Flashcard</button>
-  <button class="mode-tab" onclick="setMode('recall',this)">Recall</button>
-</div>
-
-<!-- ═══ FLIP MODE ═══ -->
-<div id="flipMode">
-  <div class="card-wrap" onclick="flipCard()">
-    <div class="card-inner" id="cardInner">
-
-      <!-- FRONT -->
-      <div class="card-face card-front">
-        <div class="card-meta">
-          <span class="freq-dot" id="freqDot"></span>
-          <span class="card-subject-tag">Evidence</span>
-          <span class="card-num" id="cardNum"></span>
-          <button class="edit-btn" onclick="event.stopPropagation(); openEdit()">Edit</button>
+<!-- FLASHCARD -->
+<div id="modeFlip">
+  <div class="flip-wrap" id="flipWrap">
+    <div class="flip-inner" id="flipInner">
+      <div class="flip-face">
+        <div class="cmeta">
+          <span class="freq" id="fFreq1">High</span>
+          <span class="ctag">Evidence</span>
+          <span class="cnum" id="fNum1">#1</span>
         </div>
-        <div class="card-label">Issue</div>
-        <div class="card-issue" id="cardIssue">—</div>
-        <div class="flip-hint">tap to reveal rule →</div>
+        <div class="flbl">Issue</div>
+        <div class="fissue" id="fIssue">—</div>
+        <div class="fhint">tap to reveal rule →</div>
       </div>
-
-      <!-- BACK -->
-      <div class="card-face card-back">
-        <div class="card-meta">
-          <span class="freq-dot" id="freqDot2"></span>
-          <span class="card-subject-tag">Evidence</span>
-          <span class="card-num" id="cardNum2"></span>
-          <button class="edit-btn" onclick="event.stopPropagation(); openEdit()">Edit</button>
+      <div class="flip-face flip-back">
+        <div class="cmeta">
+          <span class="freq" id="fFreq2">High</span>
+          <span class="ctag">Evidence</span>
+          <span class="cnum" id="fNum2">#1</span>
         </div>
-        <div class="card-label">Rule</div>
-        <div class="rule-body" id="cardRule" onclick="event.stopPropagation()"></div>
-        <div class="extras" id="cardExtras"></div>
+        <div class="flbl">Rule</div>
+        <div class="frule" id="fRule"></div>
+        <div id="fExtras"></div>
+        <div class="note-lbl">My Notes</div>
+        <textarea class="note-area" id="noteArea" placeholder="Add your notes here..."></textarea>
+        <button class="note-btn" id="noteBtn">Save note</button>
       </div>
     </div>
   </div>
-
-  <div class="srs-chip" id="srsChip"></div>
-
-  <div class="nav-row">
-    <button class="nav-btn" onclick="prevCard()">← Prev</button>
-    <div class="card-counter" id="cardCounter">— / —</div>
-    <button class="nav-btn" onclick="nextCard()">Next →</button>
-  </div>
-
-  <div class="actions">
-    <button class="action-btn mastered" onclick="markCard('mastered')">✓ Mastered</button>
-    <button class="action-btn review" onclick="markCard('review')">↺ Review</button>
-    <button class="action-btn due" onclick="markCard('due')">! Due today</button>
-  </div>
+  <div class="srs" id="srsChip"></div>
 </div>
 
-<!-- ═══ RECALL MODE ═══ -->
-<div id="recallMode" style="display:none">
-  <div class="recall-card">
-    <div class="card-meta">
-      <span class="freq-dot" id="rFreqDot"></span>
-      <span class="card-subject-tag">Evidence</span>
-      <span class="card-num" id="rCardNum"></span>
+<!-- RECALL -->
+<div id="modeRecall" style="display:none">
+  <div class="card">
+    <div class="cmeta">
+      <span class="freq" id="rFreq">High</span>
+      <span class="ctag">Evidence</span>
+      <span class="cnum" id="rNum">#1</span>
     </div>
-    <div class="recall-issue" id="rIssue">—</div>
-    <div class="recall-prompt">Write out the key elements from memory</div>
-    <textarea class="recall-input" id="recallInput" placeholder="Type the rule here..."></textarea>
-    <button class="check-btn" onclick="checkRecall()">Check answer</button>
-
-    <div class="feedback" id="feedback">
-      <div class="fb-score" id="fbScore"></div>
-      <div id="fbMsg"></div>
-      <div class="kw-tags" id="kwTags"></div>
-    </div>
-
-    <div class="rule-reveal" id="ruleReveal">
-      <div class="extra-label" style="font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase">Full Rule</div>
-      <div class="rule-body" id="rRuleBody"></div>
-      <div class="extras" id="rExtras"></div>
-    </div>
-  </div>
-
-  <div class="nav-row">
-    <button class="nav-btn" onclick="prevCard()">← Prev</button>
-    <div class="card-counter" id="rCounter">— / —</div>
-    <button class="nav-btn" onclick="nextCard()">Next →</button>
-  </div>
-
-  <div class="actions">
-    <button class="action-btn mastered" onclick="markCard('mastered')">✓ Mastered</button>
-    <button class="action-btn review" onclick="markCard('review')">↺ Review</button>
-    <button class="action-btn due" onclick="markCard('due')">! Due today</button>
-  </div>
-</div>
-
-<!-- ═══ EDIT OVERLAY ═══ -->
-<div class="edit-overlay" id="editOverlay">
-  <div class="edit-panel">
-    <div class="edit-header">
-      <div class="edit-title">Edit Card</div>
-      <button class="edit-close" onclick="closeEdit()">✕</button>
-    </div>
-    <div class="edit-body">
-      <div class="edit-field">
-        <label>Issue / Topic</label>
-        <input type="text" id="editIssue">
+    <div class="issue" id="rIssue">—</div>
+    <div class="rlbl">Write out the key elements from memory</div>
+    <textarea class="rinp" id="rInp" placeholder="Type the rule here..."></textarea>
+    <button class="ckbtn" id="ckBtn">Check answer</button>
+    <div id="fbWrap" style="display:none">
+      <div class="fb">
+        <div class="fbtop" id="fbTop">
+          <div class="fbpct" id="fbPct">0%</div>
+          <div>
+            <div class="fbv" id="fbV"></div>
+            <div class="fbs2" id="fbS"></div>
+          </div>
+        </div>
+        <div class="fbbody">
+          <div class="kl">Covered ✓</div>
+          <div class="ktags" id="kwH"></div>
+          <div class="kl">Missing ✗</div>
+          <div class="ktags" id="kwM"></div>
+          <div class="again" id="againEl" style="display:none">Below 80% — this card will repeat in this session.</div>
+        </div>
       </div>
-      <div class="edit-field">
-        <label>Rule <span class="md-hint">(markdown supported: **bold**, *italic*, 1. lists, ---)</span></label>
-        <textarea id="editRule"></textarea>
+      <div class="rbox">
+        <div class="rboxlbl">Full Rule</div>
+        <div class="frule" id="rRuleBody"></div>
       </div>
-      <div class="edit-field">
-        <label>Frequency</label>
-        <select id="editFreq">
-          <option value="high">High</option>
-          <option value="mid">Mid</option>
-          <option value="low">Low</option>
-        </select>
-      </div>
-      <div class="edit-field">
-        <label>Keywords <span class="md-hint">(comma-separated — used for Recall scoring)</span></label>
-        <textarea id="editKeywords" style="min-height:70px"></textarea>
-      </div>
-      <div class="edit-field">
-        <label>Mnemonic / 口诀</label>
-        <input type="text" id="editMnemonic">
-      </div>
-      <div class="edit-field">
-        <label>Trigger Fact</label>
-        <textarea id="editTrigger" style="min-height:70px"></textarea>
-      </div>
-      <button class="edit-save" onclick="saveEdit()">Save changes</button>
     </div>
   </div>
 </div>
 
-<footer>CA Bar Prep · Evidence · <span id="footerCount"></span> cards</footer>
-
-</div><!-- /app -->
+<div class="nav">
+  <button class="navbtn" id="prevBtn">← Prev</button>
+  <div class="navctr" id="navCtr">1 / 46</div>
+  <button class="navbtn" id="nextBtn">Next →</button>
+</div>
+<div class="acts">
+  <button class="actbtn ms" id="btnMs">✓ Mastered</button>
+  <button class="actbtn rv" id="btnRv">↺ Review</button>
+  <button class="actbtn du" id="btnDu">! Due today</button>
+</div>
+</div>
 
 <script>
-// ══════════════════════════════════════════════
-//  DATA
-// ══════════════════════════════════════════════
-const RAW = [{"id": "1", "issue": "Relevance", "rule": "To be admissible, evidence must be both logically and legally relevant. \n\nThe logical relevance is established if the evidence has any tendency to make a fact more or less probable than it would be without the evidence, and the fact is of consequence in determining the action.\n\nThe logical relevance is established if its probative value is not substantially outweighed by the risk of unfair prejudice, confusing the issue, misleading the jury, undue delay, waste of time, or needless presentation of cumulative evidence.", "frequency": "high", "keywords": ["logical relevance", "any tendency to make a fact more or less probable", "fact of consequence", "legal relevance", "probative value substantially outweighed by prejudicial effect"], "mnemonic": "\u504f\u8bef\u6742\u8d39\u6162\u91cd\u590d", "trigger": "\u6240\u6709\u8bc1\u636e\u6cd5\u9898\u76ee\uff0c\u9488\u5bf9\u6bcf\u4e00\u4e2a\u8bc1\u636e\u90fd\u8981\u5199\u7684issue\u70b9\uff0c\u4f46\u53ef\u4ee5\u6839\u636e\u9898\u76ee\u7684\u65f6\u95f4\u5206\u914d\u60c5\u51b5\u7b80\u5199"}, {"id": "2", "issue": "CEC Rule \u2013 California Proposition 8", "rule": "In criminal cases, all relevant evidence shall not be excluded unless the evidence falls under the following exceptions: (1) limits on prosecution from offering specific character evidence (Defendant opens the door); (2) evidence barred under Rape-shield statutes; (3) CEC 352; (4) Secondary evidence rule; (5) Hearsay rule; (6) Exclusionary rules based upon the US Constitution; (7) Privileges exclusions.", "frequency": "high", "keywords": ["all relevant evidence shall not be excluded", "character evidence", "rape-shield rule", "CEC 352", "Secondary evidence", "hearsay", "US Constitution", "privilege"], "mnemonic": "DR Mammal Counts SHEEP", "trigger": "\u53ea\u8981\u8003\u52a0\u5dde\u8bc1\u636e\u6cd5\uff0c\u90fd\u8981\u5199\u3002\u6c11\u4e8b\u6848\u4ef6\u5199prop 8\u4e0d\u9002\u7528\uff0c\u5211\u4e8b\u6848\u4ef6\u5199prop 8\u9002\u7528\u3002"}, {"id": "3", "issue": "Subsequent Remedial Measures", "rule": "Evidence of measures taken after an injury, which would have made the harm less likely, is not admissible to prove negligence, culpable conduct, product defect and need for a warning. Such evidence is admissible only to prove ownership, control, feasibility of precautionary measures, or for impeachment.", "frequency": "med", "keywords": ["not admissible to prove negligence", "culpable conduct", "product defect", "need for a warning", "admissible to prove ownership", "control", "feasibility of precautionary measures", "or for impeachment"], "mnemonic": "", "trigger": ""}, {"id": "4", "issue": "Settlement Negotiations", "rule": "Evidence of offering, accepting, or statements made during settlement negotiations about a disputed claim is not admissible to prove liability or the amount of the claim. Such evidence is admissible to prove bias, prejudice, delay, or obstruction of a criminal investigation.", "frequency": "med", "keywords": ["about a disputed claim", "not admissible to prove liability", "amount of claim", "admissble to prove bias", "prejudice of a witness"], "mnemonic": "\u5b9e\u9645\u4e89\u8bae\u4ea7\u751f\u524d\u7684\u9648\u8ff0\u4e0d\u88ab\u6392\u9664", "trigger": ""}, {"id": "5", "issue": "Payment of Medical Expenses", "rule": "Evidence of furnishing or offering to pay medical expenses resulting from an injury is not admissible to prove liability for the injury. \n\nHowever, under the FRE, accompanying factual admissions are admissible. In CA, related factual statements are not admissible.", "frequency": "med", "keywords": ["not admissible to prove liability for the injury", "accompanying admissions are admissible (FRE)", "fatual statements are not admissible (CA)"], "mnemonic": "", "trigger": ""}, {"id": "6", "issue": "Plea Bargaining", "rule": "Evidence of a withdrawn guilty plea, a plea of nolo contendere, or statements made during plea discussions is inadmissible against the defendant. Such evidence may be admitted in a perjury prosecution, or when fairness requires considering related statements together.", "frequency": "low", "keywords": ["inadmissible against the defendant", "admitted in a perjury prosecution", "fairness requires"], "mnemonic": "", "trigger": ""}, {"id": "7", "issue": "Liability Insurance", "rule": "Evidence that a person was or was not insured against liability is not admissible to prove culpable conduct (such as negligence). Such evidence is admissible to prove ownership, control, or bias of a witness.", "frequency": "med", "keywords": ["not admissible to prove culpable conduct", "admissible to prove ownership", "control", "bias"], "mnemonic": "", "trigger": ""}, {"id": "8", "issue": "Attorney-Client Privilege", "rule": "The attorney-client privilege protects confidential communications between client and attorney from disclosure if: (1) made for the purpose of obtaining legal advice; and (2) the communication was confidential (not knowingly made in front of third-parties).\n\nThe privilege does not apply (1) if the communication was for furtherance of crime or fraud; (2) in attorney-client disputes; or (3) when joint clients are later involved in civil litigation.\n\nThe privilege is held by the client and survives the client\u2019s death. The client may waive the privilege at any time, including by disclosure to third parties.", "frequency": "high", "keywords": ["for the purpose of obtaining legal advice", "communication was confidential", "does not apply", "crime or fraud", "in attorney-client disputes", "joint clients", "held by the client", "survives death", "client may waive"], "mnemonic": "", "trigger": ""}, {"id": "5", "issue": "Attorney Work Product Doctrine", "rule": "In federal court, the work product doctrine protects all documents and materials prepared by or for an attorney in anticipation of or during litigation. Such matetials are not discoverable unless opposing party shows substantial need and undue hardship.\n\nIn CA, the work product doctrine only protects documents and materials prepared by the attorney in anticipation of litigation.\n (1) Absolute privilege: Materials that are comprised of the attorney's impressions, notes or opinions are absolutely protected and not discoverable.\n (2) Qualified privilege: Other materials are deemed as qualified work product, and are discoverable upon showing substantial need and undue hardship.", "frequency": "high", "keywords": ["federal court", "by or for an attorney", "in anticipation of  or during litigation", "substantial need", "undue hardship", "CA", "prepared by the attorney", "in anticipation of litigation", "attorney's impressions", "notes or opinions", "absolutely protected", "other materials", "discoverable upon showing substantial need and undue hardship."], "mnemonic": "", "trigger": ""}, {"id": "6", "issue": "Confidential Marital Communications privilege", "rule": "Confidential Marital Communications privilege protects private communications made during a valid marriage which were intended to be confidential. The privilege is held by both spouses and survives divorce.", "frequency": "med", "keywords": ["during a valid marriage", "intended to be confidential", "held by both spouses", "survives divorce"], "mnemonic": "", "trigger": ""}, {"id": "7", "issue": "Spousal Immunity privilege", "rule": "Under the FRE, a spouse may not be compelled to testify against the other spouse in a criminal case (even if the spouse is not a defendent). The privilege is held by the testifying spouse and ends upon divorce.\n\nIn CA, the privilege applied in both civil and criminal cases.", "frequency": "med", "keywords": ["FRE", "criminal case", "testifying spouse", "ends upon divorce", "CA civil and criminal cases"], "mnemonic": "", "trigger": ""}, {"id": "8", "issue": "Hearsay Definition and General Rule", "rule": "Hearsay is an out-of-court statement offered to prove the truth of the matter asserted. Hearsay is not admissible unless it falls under an exception.\n\nA statement means an a person's oral assertion, written assertion, or non-verval conduct if the person intended it as an assertion.\n\nWhen evidence contains hearsay within hearsay, each level of hearsay must fall within an exception to be admissible.", "frequency": "high", "keywords": ["out-of-court statement", "offered to prove the truth of the matter asserted", "not admissible", "oral assertion", "written assertion", "non-verval conduct", "hearsay within hearsay", "each level"], "mnemonic": "", "trigger": ""}, {"id": "9", "issue": "Statements offered for other purposes (non-hearsay)", "rule": "If an out-of-court statement is offered to prove something other than the truth of the statement, it is non-hearsay and admissible. \n\nCommon non-hearsay statements include:\n(1) verbal acts of independent legal significance;\n(2) prior inconsistent statement offered to impeach;\n(3) statement offered to show the effect on the listener;\n(4) circumstantial evidence of the speaker\u2019s state of mind.", "frequency": "high", "keywords": ["prove something other than the truth of the statement", "independent legal significance", "effect on the listener", "state of mind"], "mnemonic": "", "trigger": "\u8b66\u65b9\u51c6\u5907\u7684\u4e8b\u6545\u62a5\u544a\u4e2d\u73b0\u573a\u8bc1\u4eba\u7684 \u8bc1\u8a00"}, {"id": "10", "issue": "Prior Identification (Hearsay exclusion)", "rule": "Prior identification of a person, made after perceiving that person, is admissible if the declarant testifies at trial and is subject to cross-examination concerning the statement.", "frequency": "med", "keywords": ["declarant testifies at trial", "subject to cross-examination"], "mnemonic": "", "trigger": ""}, {"id": "11", "issue": "Opposing Party\u2019s Statement (Hearsay exclusion)", "rule": "A statement is not hearsay if it is offered against an opposing party and is\uff1a\n(1) the opposing party\u2019s own statement, either in an individual or representative capacity; \n(2) a statement the opposing party has adopted or believed to be true by silence (adoptive admission); \n(3) a statement made by a person authorized by the opposing party to speak (vicarious admission);\n(4) a statement made by the opposing party\u2019s agent or employee on a matter within the scope of that relationship and during its existence (vicarious admission) ;\n(5) a statement made by the opposing party\u2019s co-conspirator during and in furtherance of the conspiracy (vicarious admission\uff09.", "frequency": "high", "keywords": ["own statement", "adoptive admission", "by silence", "by a person authorized to speak", "by agent or employee", "by co-conspirator"], "mnemonic": "", "trigger": ""}, {"id": "12", "issue": "Declarant triggers", "rule": "Declarant is deemed unavailabl if they claim a privilege, refuse to testify despite a court order to do so, lack memory, cannot be present because of death or ill, or are absent and cannot be procured by process or reasonable means.\n\nThe unavailability of declarant must not have been caused by either party.", "frequency": "high", "keywords": ["privilege", "refuse", "lack memory", "death or ill", "cannot be procured"], "mnemonic": "", "trigger": ""}, {"id": "13", "issue": "Former Testimony (Prior statement made under oath)", "rule": "Former testimony is admissible if:\n(1)\u00a0the declarant is\u00a0unavailable;\n(2)\u00a0testimony was given at\u00a0prior proceeding\u00a0or deposition;\n(3)\u00a0the same issues are involved; and\n(4) the party who is offered against had\u00a0same motive and opportunity to cross-examine the witness.\n\nIn civil cases, under FRE, the prior testimony may be used only against the same party or a predecessor in interest; in California, it is enough if a person with a similar interest was present or it is offered against a successor. In criminal cases, the defendant personally must have had the same motive and opportunity to cross-examine.", "frequency": "mid", "keywords": ["unavailable", "given at\u00a0prior proceeding\u00a0or deposition", "same issues", "same motive and opportunity", "civil case", "FRE", "same party or predecessor in interest", "CA", "similar interest"], "mnemonic": "", "trigger": ""}, {"id": "14", "issue": "Dying Declaration", "rule": "Dying declaration is admissible if:\n(1)\u00a0the declarant is\u00a0unavailable;\n(2)\u00a0the statement made under\u00a0a belief of imminent death;\n(3) the\u00a0statement\u00a0concerns the cause\u00a0or circumstances of the declarant's impending death.\n\nUnder FRE, it is admissible only in homicide prosecutions and civil cases; in California, it is admissible in all cases.", "frequency": "mid", "keywords": ["unavailable", "belief of imminent death", "cause\u00a0or circumstances", "FRE", "homicide prosecutions and civil cases"], "mnemonic": "", "trigger": ""}, {"id": "15", "issue": "Statement Against Interest", "rule": "Statement against interest is admissible if:\n(1)\u00a0the declarant is\u00a0unavailable;\n(2)\u00a0the statement was against the declarant\u2019s\u00a0pecuniary, proprietary, or penal interest\u00a0at the time made (in CA, statements against societal interests are also admissible);\n(3)\u00a0a\u00a0reasonable person\u00a0would not have made the statement unless the person believed it to be true;\n(4)\u00a0the declarant has firsthand knowledge;\n\nUnder FRE, if offered in a criminal case, it must be\u00a0supported by corroborating evidence.", "frequency": "high", "keywords": ["unavailable", "pecuniary", "proprietary", "or penal interest", "CA", "societal interest", "reasonable person", "believed it to be true", "firsthand knowledge", "criminal case", "corroborating evidence"], "mnemonic": "", "trigger": ""}, {"id": "16+22:22", "issue": "Present Sense Impression", "rule": "Present sense impression is admissible if:\n(1)\u00a0the statement\u00a0describes or explains\u00a0an event or condition; and\n(2)\u00a0the statement was made\u00a0while perceiving\u00a0the event, or\u00a0immediately\u00a0thereafter. A few minutes is after the event is within the period contemplated under the hearsay exception.\n\nIn CA, this exception is referred to as contemporaneous statement, and only applies to a statement explaining the declarant's own conduct and while the declarant engaged in that conduct.", "frequency": "high", "keywords": ["present sense impression", "describe or explain an event", "while perceiving", "or immediately thereafter", "CA", "contemporaneous statement", "own conduct", "engaged in"], "mnemonic": "", "trigger": ""}, {"id": "17", "issue": "Excited Utterance", "rule": "Excited utterance is admissible if:\n(1)\u00a0a\u00a0startling event\u00a0occurred;\n(2) the statement\u00a0relates to\u00a0the event; and\n(3)\u00a0the statement was made\u00a0under the stress\u00a0of excitement caused by the event.\n\nIn CA, this exception is referred to as spontaneous statement.", "frequency": "high", "keywords": ["startling event", "relates to", "under the stress of excitement", "spontaneous statement"], "mnemonic": "", "trigger": ""}, {"id": "18", "issue": "Statement of Then-Existing State of Mind", "rule": "Statement of the declarant's then-existing state of mind (i.e. intent, plan, motive) or emotion, sensory, or physical condition is admissible to show the condition or state of mind. However, it does not apply to a statement of memory or belief.", "frequency": "high", "keywords": ["then-existing state of mind (i.e. intent", "plan", "motive) or emotion", "sensory", "or physical condition", "does not apply to statement of memory or belief"], "mnemonic": "", "trigger": ""}, {"id": "19", "issue": "Medical Diagnosis or Treatment Statements", "rule": "A statement made\u00a0for and reasonably pertinent to medical diagnosis or treatmen is admissible if it describes medical history or symptoms, not statements of fault.", "frequency": "med", "keywords": ["made for and reasonably pertinent to", "medical diagnosis or treatment", "describes medical history or diagnosis"], "mnemonic": "", "trigger": ""}, {"id": "20", "issue": "Past Recollection Recorded", "rule": "Past recollection recorded is admissible if:\n(1)\u00a0the witness once\u00a0had personal knowledge of the event;\n(2)\u00a0the witness can\u00a0no longer remember\u00a0the event.;\n(3)\u00a0the record was made or adopted when the\u00a0matter was fresh in the mind of the witness;\n(4)\u00a0the record\u00a0is accurate;\n\nIf admitted, the record may be\u00a0read into evidence,\u00a0but only received as an exhibit if offered by an adverse party.", "frequency": "med", "keywords": ["personal knowledge", "no longer remember", "fresh in the mind", "accurate", "read into evidence", "only received as an exhibit if offered by an adverse party"], "mnemonic": "", "trigger": ""}, {"id": "21", "issue": "Business Records", "rule": "A business record is admissible if it is:\n(1)\u00a0made\u00a0at or near the time\u00a0of the event;\n(2)\u00a0made by a person\u00a0with knowledge;\n(3)\u00a0kept in the\u00a0ordinary course\u00a0of business;\n(4)\u00a0is the\u00a0regular practice\u00a0of that business to make such records; and\n(5) a record of events, conditions, opinions, or diagnoses (CEC: does not include opinions or diagnosis).", "frequency": "high", "keywords": ["at or near", "personal knowledge", "ordinary course of business", "regular practice", "record of events", "conditions", "opinions or diagnosis"], "mnemonic": "", "trigger": ""}, {"id": "22", "issue": "Public Records", "rule": "Under FRE, public records are admissible if within one of the following categories:\n(1)\u00a0record describing the policies and practices of\u00a0public office/agency;\n(2)\u00a0observations\u00a0made under his duty by law; or\u00a0\n(3) factual findings\u00a0from a legally authorized investigation. However, criminal prosecutions cannot use matters observed by police officers against a criminal defendant. \n\nIn CA, public record is admissible if:\n(1) making the record was in the scope of duty;\n(2) the record was made near the time of matters described; and \n(3) the source of information and time of preparation indicate trustworthiness.", "frequency": "med", "keywords": ["FRE", "policies and practices", "observations", "factual findings", "matters observed by police officers against criminal defendant", "CA", "scope of duty", "near the time", "source of information", "time of preparation", "trustworthiness"], "mnemonic": "", "trigger": ""}, {"id": "23", "issue": "Character evidence - general rule", "rule": "Character evidence is\u00a0not admissible\u00a0to prove that a person acted in conformity with a character trait on a particular occasion, unless for\u00a0non-propensity\u00a0purposes or when\u00a0character in issue. Notwithstanding the above, character evidence may be offered as circumstantial evidence to prove propensity in\u00a0certain limited circumstances. \n\nReputation or Opinion are in all instances admissible. Specific Acts are admissible only when character in issue, or on cross examination.", "frequency": "high", "keywords": ["not admissible", "in comformity with a character trait", "unless for non-propensity purposes", "when character in issue", "circumstantial evidence", "reputation or opinion are in all instances admissible", "specific acts", "character in issue", "cross examination"], "mnemonic": "\ud83d\udc49Direct = Rep / Opinion only\n\ud83d\udc49 Cross = Can ask specific\n\ud83d\udc49 But no proof with extrinsic\n\ud83d\udc49 Unless issue / MIMIC / sex crimes", "trigger": ""}, {"id": "24", "issue": "Character evidence in\u00a0Criminal Case", "rule": "(1) Defendant\u2019s character: \nDefendant may always offer evidence of their own character trait (reputation or opinion). If defendant opens the door, prosecution may rebut with: (a) Evidence of defendant\u2019s bad character for that trait, OR (b) Evidence of victim\u2019s good character for that trait.\n\n(2) Victim\u2019s character\n(a) General rule: Defendant may offer victim\u2019s character trait; prosecution may rebut with evidence of victim\u2019s good character, OR evidence of defendant\u2019s bad character for the same trait.\n(b) Homicide case: If the defendant claims that the victim was the\u00a0first aggressor, the prosecution may introduce evidence that the victim was peaceful.\n(c) Sex-offense case: Evidence of a victim\u2019s other sexual behavior or predisposition is generally inadmissible, except:\n o\u00a0\u00a0\u00a0\u00a0Past sexual conduct with defendant (to prove consent);\n o\u00a0\u00a0\u00a0\u00a0Evidence another person caused injury/pregnancy;\n o\u00a0\u00a0\u00a0\u00a0Evidence exclusion would violate defendant\u2019s constitutional rights.", "frequency": "high", "keywords": ["defendant's character", "defendant may offer evidence of his own character trait; prosecution cannot offer", "unless defendant first offers", "victim's character", "general", "defendant may offer evidence of victim's character", "prosecution may rebut with defendant's bad character", "evidence of victim's good character", "homicide case", "prosecution may offer evidence of vitctim's peacefulness", "only if defendant claims victim was first aggressor", "sex-offense case", "not admissible to prove victim\u2019s sexual behavior or predisposition", "except", "past sexual conduct with defendant", "another person cause", "constitutional rights"], "mnemonic": "", "trigger": ""}, {"id": "25", "issue": "Character evidence in Civil Cases", "rule": "Character evidence cannot be introduced to prove propensity unless the FRE exception for\u00a0sex-offense cases\u00a0applies.\nThe court may admit evidence offered to prove a victim\u2019s sexual behavior or predisposition only if its probative value substantially outweighs the risk of harm or unfair prejudice, and reputation evidence is allowed only if the victim has put reputation in issue.", "frequency": "high", "keywords": ["cannot be introduced", "prove propensity", "exception", "sex-offense cases", "victim's sexual behavior or predisposition", "only if", "probative value substantially outweighs", "reputation is allowed only if", "in issue"], "mnemonic": "", "trigger": ""}, {"id": "26", "issue": "Prior Bad Acts\uff08MIMIC rule\uff09", "rule": "Evidence of other crimes, wrongs, or acts is not admissible to show propensity. However, such evidence may be admissible for any non-propensity purposes, such as proving Motive, Intent, absence of Mistake, Identity, or Common plan/scheme.", "frequency": "high", "keywords": ["crimes", "wrongs", "or acts", "not admissible", "show propensity", "admissible for non-propensity purposes", "motive", "intent", "mistake", "identity", "common plan/scheme"], "mnemonic": "MIMIC", "trigger": ""}, {"id": "27", "issue": "Habit and routine practice", "rule": "Habit evidence is admissible to show that a person acted in conformity with the habit on a particular occasion.\nA habit means a regular response to a repeated situation, almost automatic in nature.\nRoutine practice of an organization is treated the same way.", "frequency": "low", "keywords": ["habit", "in comformity with", "habit on a particular occasion", "regualr response", "repeated situation", "automatic", "routine practice", "treated the same way"], "mnemonic": "", "trigger": ""}, {"id": "28", "issue": "Lay Witness Testimony", "rule": "A lay witness may testify if he is competent to testify. Additionally, a witness may only testify to matters of which he has personal knowledge.\n\nTo be competent, the witness must take an oath to tell the truth and have the capacity to perceive, recall, and communicate. Under the FRE, the competency is presumed except for presiding judges and jurors. In CA, in addition to above competency factors, the witness must understand the legal duty to tell the truth. Also, the presiding judge or juror may testify if there is no objection.", "frequency": "high", "keywords": ["competent", "personal knowledge", "to be competent", "take an oath", "capacity to perceive", "recall", "communicate", "FRE", "presumed", "except for presiding judges and jurors", "CA", "understand the legal duty to tell the truth", "presiding judges and jurors may testify", "if no objection"], "mnemonic": "", "trigger": ""}, {"id": "29", "issue": "Lay Opinion Rule", "rule": "A lay witness may give opinion testimony if three conditions are met:\n(1) The opinion is\u00a0rationally based on\u00a0the witness\u2019s own perception;\n(2) The opinion is\u00a0helpful to clearly understanding the witness\u2019s testimony or determining a fact in issue; and\n(3) The opinion is not based on\u00a0scientific, technical, or other specialized\u00a0knowledge (FRE only).", "frequency": "high", "keywords": ["witness's perception", "helpful", "FRE", "not based on scientific", "technical or other specialized knowledge"], "mnemonic": "", "trigger": ""}, {"id": "30", "issue": "Expert Opinion Rule", "rule": "An expert witness may give opinion testimony if five conditions are satisfied:\n(1) The witness is\u00a0qualified\u00a0as an expert by knowledge, skill, experience, training, or education;\n(2) The subject matter is appropriate for expert testimony;\n(3) The testimony is based on sufficient facts or data;\n(4) The testimony is the product of reliable principles and methods; and\n(5) The expert has reliably applied those principles and methods to the facts of the case. \n\nUnder FRE, the court applies the Daubert/Kumho standard, focusing on the reliability of the methodology (testibility, publication and peer review, error rate, standards and control, general acceptance). In contrast, California applies the Kelly/Frye test for novel scientific evidence, which requires general acceptance in the relevant scientific community.", "frequency": "high", "keywords": ["qualified", "helpful", "sufficient facts or data", "reliable principles and methods", "reasonably applied", "FRE", "Daubert/Kumho standard", "reliability of methodology", "CA", "Kelly/Frye standard", "general acceptance"], "mnemonic": "", "trigger": ""}, {"id": "31", "issue": "Refreshing Recollection", "rule": "A witness may use a writing or other item to refresh memory while testifying, if:\n(1)\u00a0The witness once had personal knowledge;\n(2)\u00a0The witness currently does not recall fully;\n(3)\u00a0The writing or item is shown to the witness solely to jog memory;\n(4)\u00a0After refreshing, the testimony must come from the witness\u2019s own recollection, not from the writing itself.", "frequency": "medium", "keywords": ["personal knowledge", "not recall fully", "solely to jog memory", "own recollection"], "mnemonic": "", "trigger": ""}, {"id": "32", "issue": "Trial Objection", "rule": "Narrative: A question that calls for a narrative answer is objectionable because it invites a long, unfocused story rather than specific facts.\nUnresponsive: An answer is objectionable if it does not directly respond to the question asked.\nCompound Questions:\tA question is objectionable if it asks multiple things at once, making it unclear which part the witness is answering.\nArgumentative:\tA question is objectionable if it is designed to argue with the witness, not elicit facts.\nLeading Questions:\tA leading question is one that suggest answer to the witness. Leading questions are permitted on cross examination, but not on direct examination unless: (1) the witness is hostile, an adverse party, or identified with the adverse party; (2) it clarifies background information; or (3) the witness has difficulty remembering. In CA, leading questions are only permitted on direct in the interests of justice.\nAssumes Facts Not in Evidence:\tA question is objectionable if it presumes facts not yet admitted into evidence.\nSpeculation:\tA question is objectionable if it calls for the witness to guess rather than testify from personal knowledge.", "frequency": "medium", "keywords": ["narrative", "objectionable", "invites a long story", "unresponsive", "objectionable", "not directly respond", "compound", "multiple things at once", "unclear", "argumentative", "objectionable", "designed to argue", "leading questions", "suggest answer", "only permitted on cross examination", "unless", "witness is hostile", "clatifies background information", "difficulty remembering", "CA", "only permitted", "in the interests of justice", "assumed facts not in evidence", "objectionable", "presumed facts", "speculation", "objectionable", "calls for guess"], "mnemonic": "NUCALF", "trigger": ""}, {"id": "33", "issue": "Impeachment -\u00a0General rule", "rule": "A witness may be impeached by showing prior inconsistent statements, prior bad acts, prior convictions, bias, character for untruthfulness, defects in perception or memory, or contradiction by other evidence. Some methods allow extrinsic evidence; others are limited to cross-examination only.", "frequency": "high", "keywords": ["prior inconsistent statements", "prior bad acts", "prior convictions", "bias", "character", "perception or memory"], "mnemonic": "", "trigger": "\u6309\u201c\u6cd5\u5b98\u7684\u5bb9\u5fcd\u5ea6\u201d\u5206\u6210\u4e09\u7c7b\uff1a\n1. \u7eff\u706f\u533a\uff1a\u6c38\u8fdc\u5141\u8bb8\u5916\u90e8\u8bc1\u636e\u2014\u2014\u8fd9\u4e09\u7c7b\u8bc1\u636e\u6781\u5176\u91cd\u8981\uff0c\u6cd5\u5b98\u8ba4\u4e3a\u5b83\u4eec\u76f4\u63a5\u5f71\u54cd\u8bc1\u8a00\u7684\u53ef\u9760\u6027\uff0c\u6240\u4ee5\u5373\u4fbf\u8bc1\u4eba\u5426\u8ba4\uff0c\u4f60\u4e5f\u53ef\u4ee5\u7529\u51fa\u5916\u90e8\u8bc1\u636e\u3002\n\u504f\u89c1 (Bias)\uff1a\u8bc1\u4eba\u662f\u4e0d\u662f\u539f\u544a\u7684\u4eb2\u621a\uff1f\u53ea\u8981\u80fd\u8bc1\u660e\u8bc1\u4eba\u201c\u5c41\u80a1\u5750\u6b6a\u4e86\u201d\uff0c\u5916\u90e8\u8bc1\u636e\u6c38\u8fdc\u53ef\u7528\u3002\n\u611f\u5b98\u7f3a\u9677 (Sensory Defects)\uff1a\u8bc1\u4eba\u90a3\u5929\u662f\u4e0d\u662f\u6ca1\u6234\u773c\u955c\uff1f\u662f\u4e0d\u662f\u559d\u9189\u4e86\uff1f\n\u5211\u4e8b\u5b9a\u7f6a (Prior Convictions)\uff1a\u6d89\u53ca\u201c\u4e0d\u8bda\u5b9e\u201d\u7684\u7f6a\u884c\uff08\u5982\u4f2a\u8bc1\u3001\u8bc8\u9a97\uff09\uff0c\u6cd5\u5b98\u5fc5\u987b\u51c6\u8bb8\uff1b\u91cd\u7f6a\uff08Felony\uff09\u5219\u770b\u5e73\u8861\u6d4b\u8bd5\u3002\u4f60\u53ef\u4ee5\u76f4\u63a5\u7529\u51fa\u5b9a\u7f6a\u8bb0\u5f55 (Record of Conviction)\u3002\n\n2. \u7ea2\u706f\u533a\uff1a\u7edd\u5bf9\u7981\u6b62\u201c\u6df1\u6316\u201d\uff08\u7981\u6b62\u5916\u90e8\u8bc1\u636e\uff09\n\u54c1\u683c\u884c\u4e3a (Specific Acts of Untruthfulness)\uff1a\u4f60\u53ef\u4ee5\u5728\u4ea4\u53c9\u8be2\u95ee\u65f6\u95ee\u4ed6\uff1a\u201c\u4f60\u662f\u4e0d\u662f\u5728\u5927\u4e09\u8003\u8bd5\u65f6\u4f5c\u5f0a\u8fc7\uff1f\u201d\u5982\u679c\u8bc1\u4eba\u8bf4\u201c\u6211\u6ca1\u6709\u201d\uff0c\u4f60\u5c31\u5f97\u618b\u7740\uff01 \u4f60\u4e0d\u80fd\u53eb\u4ed6\u7684\u5927\u5b66\u8001\u5e08\u6765\u4f5c\u8bc1\uff0c\u4e5f\u4e0d\u80fd\u62ff\u51fa\u5904\u5206\u6587\u4ef6\u3002\u6cd5\u5ead\u4e0d\u60f3\u4e3a\u4e86\u8fd9\u79cd\u9648\u5e74\u65e7\u4e8b\u6d6a\u8d39\u65f6\u95f4\u5f00\u201c\u5ead\u4e2d\u5ead\u201d\u3002\n\n3. \u9ec4\u706f\u533a\uff1a\u770b\u60c5\u51b5\n\u5148\u524d\u4e0d\u4e00\u81f4\u9648\u8ff0 (PIS)\uff1a\u5982\u679c\u4ed6\u8bf4\u7684\u4e8b\u5bf9\u6848\u60c5\u5f88\u91cd\u8981\uff08\u975e Collateral\uff09\uff0c\u4f60\u53ef\u4ee5\u7528\u5916\u90e8\u8bc1\u636e\uff0c\u524d\u63d0\u662f\u4f60\u5fc5\u987b\u7ed9\u8bc1\u4eba\u4e00\u4e2a\u89e3\u91ca\u6216\u5426\u8ba4\u7684\u673a\u4f1a\u3002"}, {"id": "34", "issue": "Impeachment - Prior Inconsistent Statement", "rule": "Prior inconsistent statement are admissible to impeach a witness's trial testimony. Extrinsic evidence of the statement is admissible only if:\u00a0\n(1)\u00a0it is relevant to a material issue; and\n(2)\u00a0either: a)\u00a0\u00a0a proper foundation is shown - the witness is given an opportunity to explain or deny the statement; and the opposing party is given an opportunity to examine the witness about it; OR b)\u00a0\u00a0Justice requires.\n\nUnder the FRE, a prior inconsistent statement is admissible for its truth only if made under oath at a prior proceeding, hearing, trial, or deposition. Otherwise, it is admissible only for impeachment.\n\nIn California, prior inconsistent statements are admissible both for impeachment and for their truth, regardless of whether they were made under oath.", "frequency": "high", "keywords": ["admissible to impeach", "extrinsic evidence", "admissible only if", "material issue", "witness is given", "oppurtunity to explain or deny", "oppoing party", "oppurtunity to examine", "justice requires", "admissible for its truth", "if made under oath", "CA", "both for impeachment and for their truth", "regardless of", "under oath"], "mnemonic": "", "trigger": ""}, {"id": "35", "issue": "Impeachment - Prior Criminal Convictions", "rule": "Under FRE, prior convictions may be admitted to impeach a witness.\n(1)\u00a0Felonies that do not involve dihonesty are admissible in the following cases: (a) in a civil or criminal case where the witness is not a criminal defendant (subject to FRE 403 balancing test); and (b) in a criminal case where the witness is a defendant, but only if the probative value outweighs its prejudicail effect.\n(2)\u00a0Prior felony or misdemeanor convictions involving dishonesty are always admissible to impeach.\n(3) Convictions may not be used if more than\u00a010 years have elapsed from both the conviction and the prison term,  unless their\u00a0probative value\u00a0substantially outweighs their prejudicial effect AND\u00a0proper notice\u00a0was given.\n(4) Extrinsic evidence of conviction is\u00a0permitted.\n\nIn CA, felonies involving moral turpitude are admissible to impeach in both civil and criminal cases, subject to CEC 352. Misdemeanors involving moral turpitude are admissible only in criminal cases under Prop 8, also subject to CEC 352.  California does not have a strict ten-year rule, but remoteness in time reduces the probative value of the conviction.", "frequency": "med", "keywords": ["FRE", "felonies", "not involve dishonesty", "admissible if civil or criminal case", "witness is not defendant", "criminal case", "witness is a defendant", "probative value outweighs its prejudicial effect", "felony or misdemeanor", "involving dishonesty", "always admissible", "may not be used", "more than 10 years", "probative value substantially outweighs", "proper notice", "extrinsic evidence", "CA", "felonies involving moral turpitude", "admissible in both", "misdemeanors involving moral turpitude", "admissible only in criminal cases", "remoteness", "reduces the probative value"], "mnemonic": "", "trigger": ""}, {"id": "36", "issue": "Impeachment \u2014specific acts (prior bad acts)", "rule": "A witness may be questioned about specific instances of conduct only if the conduct is probative of the witness's character for truthfulness or untruthfulness.\u00a0Such acts may be inquired into only on cross-examination. Extrinsic evidence is never admissible to prove these acts\u2014if the witness denies, examiner must take the answer as it is.\n\nIn CA, prior bad acts are generally not admissible for impeachment. However, under Proposition 8, prior bad acts may be used if the acts involve moral turpitude. In such cases, extrinsic evidence is allowed on cross-examination to prove the acts.", "frequency": "medium", "keywords": ["FRE", "specific instances of conduct", "only if", "probative of the witness's character", "on cross examination", "extrinsic evidence", "never admissible", "CA", "not admissible", "only if", "moral turpitude", "ectrinsic evidence", "permitted"], "mnemonic": "", "trigger": ""}, {"id": "37", "issue": "Bias", "rule": "Evidence of bias or interest of a witness is always relevant and may be proved by extrinsic evidence.", "frequency": "low", "keywords": ["bias or interest", "always relevant", "extrinsic evidence allowed"], "mnemonic": "", "trigger": ""}, {"id": "38", "issue": "Authentication \u2013 general rule", "rule": "Evidence is admissible only if it is authenticated. The requirement of authentication or identification is satisfied by evidence sufficient to support a finding that the matter in question is what its proponent claims.", "frequency": "high", "keywords": ["admissible only if", "authenticated", "evidence sufficient", "support a finding", "what proponent claims"], "mnemonic": "", "trigger": ""}, {"id": "39", "issue": "Authentication \u2013 physical evidence", "rule": "Physical evidence can be authenticated by (1) testimony of a witness with knowledge, or (2) evidence showing a distinctive characteristic or chain of custody sufficient to establish identity.", "frequency": "high", "keywords": ["witness with knowledge", "distinctive characteristic", "chain of custody", "establish identity"], "mnemonic": "", "trigger": ""}, {"id": "40", "issue": "Authentication \u2013 voice recording", "rule": "A voice may be authenticated by opinion testimony from a witness familiar with the voice, either from hearing it at any time, including after litigation began.", "frequency": "medium", "keywords": ["opinion testimony", "witness familiar with voice", "hear at any time"], "mnemonic": "", "trigger": ""}, {"id": "41", "issue": "Best evidence rule (Secondary evidence rule)", "rule": "To prove the content of a writing, recording, or photograph, the original is required. A duplicate is admissible unless a genuine question is raised about the original\u2019s authenticity, or admitting the duplicate would be unfair.\n\nIn CA, Duplicates are generally not admissible unless the proponent first proves the copy is accurate and provide a valid reason for not having the original.", "frequency": "high", "keywords": ["prove content", "writing", "recording", "photograph", "original required", "duplicate", "admissible", "genuine question", "authenticity", "unfair to admit duplicate", "CA duplicate inadmissible", "accurate", "valid excuse for missing"], "mnemonic": "", "trigger": ""}, {"id": "42", "issue": "Judicial notice", "rule": "A court may take judicial notice of indisputable facts that are either: (1) commonly known in the community; or (2) readily capable of verification and cannot reasonably be questioned. \nThe court may take judicial notice at any stage of the proceeding.\nUnder the FRE, in a civil case, the court must instruct the jury to accept the noticed fact as conclusive; in a criminal case, the court must instruct the jury that it may or may not accept the noticed fact as conclusive.\nIn CA, judicially noticed facts are conclusive in both civil and criminal cases.", "frequency": "med", "keywords": ["indisputable facts", "commonly known", "readily capable of verification", "cannot reasonably be questioned", "any stage of proceeding", "FRE", "civil case", "must instruct", "accept as conclusive", "criminal case", "must instruct", "may or may not accept", "CA", "conclusive in civil and criminal cases"], "mnemonic": "", "trigger": ""}]
+var CARDS = [{"id":"1","issue":"Relevance","rule":"To be admissible, evidence must be both logically and legally relevant.\n\nThe **logical relevance** is established if the evidence has any tendency to make a fact more or less probable than it would be without the evidence, and the fact is of consequence in determining the action.\n\nThe **legal relevance** requires that its probative value is not substantially outweighed by the risk of unfair prejudice, confusing the issue, misleading the jury, undue delay, waste of time, or needless presentation of cumulative evidence.","freq":"high","kws":["logical relevance","any tendency to make a fact more or less probable","fact of consequence","legal relevance","probative value substantially outweighed by prejudicial effect"],"mn":"\u504f\u8bef\u6742\u8d39\u6162\u91cd\u590d","tr":"\u6240\u6709\u8bc1\u636e\u6cd5\u9898\u76ee\uff0c\u9488\u5bf9\u6bcf\u4e00\u4e2a\u8bc1\u636e\u90fd\u8981\u5199\u7684issue\u70b9"},{"id":"2","issue":"CEC Rule \u2013 California Proposition 8","rule":"In criminal cases, all relevant evidence shall not be excluded unless:\n1. Limits on prosecution offering specific character evidence\n2. Evidence barred under Rape-shield statutes\n3. CEC 352\n4. Secondary evidence rule\n5. Hearsay rule\n6. Exclusionary rules based upon the US Constitution\n7. Privileges exclusions","freq":"high","kws":["all relevant evidence shall not be excluded","character evidence","rape-shield rule","CEC 352","Secondary evidence","hearsay","US Constitution","privilege"],"mn":"DR Mammal Counts SHEEP","tr":"\u53ea\u8981\u8003\u52a0\u5dde\u8bc1\u636e\u6cd5\uff0c\u90fd\u8981\u5199\u3002"},{"id":"3","issue":"Subsequent Remedial Measures","rule":"Evidence of measures taken after an injury is **not admissible** to prove negligence, culpable conduct, product defect and need for a warning.\n\n**Admissible** to prove: ownership, control, feasibility of precautionary measures, or for impeachment.","freq":"med","kws":["not admissible to prove negligence","culpable conduct","product defect","need for a warning","admissible to prove ownership","control","feasibility of precautionary measures","or for impeachment"],"mn":"","tr":""},{"id":"4","issue":"Settlement Negotiations","rule":"Evidence of offering, accepting, or statements made during settlement negotiations **about a disputed claim** is not admissible to prove liability or the amount of the claim.\n\nAdmissible to prove bias, prejudice, delay, or obstruction of a criminal investigation.","freq":"med","kws":["about a disputed claim","not admissible to prove liability","amount of claim","admissble to prove bias","prejudice of a witness"],"mn":"","tr":""},{"id":"5","issue":"Payment of Medical Expenses","rule":"Evidence of offering to pay medical expenses is **not admissible** to prove liability.\n\n- **FRE**: accompanying factual admissions are admissible\n- **CA**: related factual statements are not admissible","freq":"med","kws":["not admissible to prove liability for the injury","accompanying admissions are admissible (FRE)","fatual statements are not admissible (CA)"],"mn":"","tr":""},{"id":"6","issue":"Plea Bargaining","rule":"Evidence of a withdrawn guilty plea, nolo contendere, or statements during plea discussions is **inadmissible** against the defendant.\n\nExceptions: perjury prosecution, or fairness requires.","freq":"low","kws":["inadmissible against the defendant","admitted in a perjury prosecution","fairness requires"],"mn":"","tr":""},{"id":"7","issue":"Liability Insurance","rule":"Evidence of insurance is **not admissible** to prove culpable conduct.\n\n**Admissible** to prove: ownership, control, or bias of a witness.","freq":"med","kws":["not admissible to prove culpable conduct","admissible to prove ownership","control","bias"],"mn":"","tr":""},{"id":"8","issue":"Attorney-Client Privilege","rule":"Protects confidential communications if:\n1. Made **for the purpose of obtaining legal advice**\n2. Communication was **confidential**\n\n**Does not apply**: crime/fraud, attorney-client disputes, joint clients.\n\nHeld by the **client**; survives death; client may waive.","freq":"high","kws":["for the purpose of obtaining legal advice","communication was confidential","does not apply","crime or fraud","in attorney-client disputes","joint clients","held by the client","survives death","client may waive"],"mn":"","tr":""},{"id":"9","issue":"Attorney Work Product Doctrine","rule":"**FRE**: Protects materials prepared **by or for an attorney** in anticipation of litigation. Not discoverable without **substantial need and undue hardship**.\n\n**CA**:\n- Absolute: attorney impressions/notes/opinions\n- Qualified: other materials, discoverable upon showing need","freq":"high","kws":["by or for an attorney","in anticipation of litigation","substantial need","undue hardship","attorney impressions","notes or opinions","absolutely protected"],"mn":"","tr":""},{"id":"10","issue":"Confidential Marital Communications Privilege","rule":"Protects private communications made **during a valid marriage** intended to be confidential.\n\nHeld by **both spouses**; survives divorce.","freq":"med","kws":["during a valid marriage","intended to be confidential","held by both spouses","survives divorce"],"mn":"","tr":""},{"id":"11","issue":"Spousal Immunity Privilege","rule":"**FRE**: Spouse cannot be compelled to testify against the other in a **criminal case**. Held by the **testifying spouse**; ends upon divorce.\n\n**CA**: applies in both civil and criminal cases.","freq":"med","kws":["FRE","criminal case","testifying spouse","ends upon divorce","CA civil and criminal cases"],"mn":"","tr":""},{"id":"12","issue":"Hearsay \u2014 Definition","rule":"**Hearsay** = out-of-court statement offered to prove the **truth of the matter asserted**. **Not admissible** unless an exception applies.\n\nStatement = oral assertion, written assertion, or non-verbal conduct intended as assertion.\n\n**Hearsay within hearsay**: each layer must independently qualify.","freq":"high","kws":["out-of-court statement","truth of the matter asserted","not admissible","oral assertion","written assertion","non-verbal conduct","hearsay within hearsay"],"mn":"","tr":""},{"id":"13","issue":"Non-Hearsay Purposes","rule":"Statement offered for something **other than the truth** is non-hearsay.\n\nCommon purposes:\n1. Independent legal significance\n2. Impeachment\n3. Effect on the listener\n4. Circumstantial evidence of state of mind","freq":"high","kws":["other than the truth","independent legal significance","effect on the listener","state of mind"],"mn":"","tr":""},{"id":"14","issue":"Prior Identification","rule":"Prior identification is admissible if the **declarant testifies at trial** and is **subject to cross-examination**.","freq":"med","kws":["declarant testifies at trial","subject to cross-examination"],"mn":"","tr":""},{"id":"15","issue":"Opposing Party's Statement","rule":"Not hearsay if offered against an opposing party as:\n1. Party's **own statement**\n2. **Adoptive admission** by silence\n3. **Authorized speaker**\n4. **Agent or employee** within scope\n5. **Co-conspirator** during/in furtherance of conspiracy","freq":"high","kws":["own statement","adoptive admission","by silence","authorized speaker","by agent or employee","by co-conspirator"],"mn":"","tr":""},{"id":"16","issue":"Declarant Unavailability","rule":"Declarant is **unavailable** if:\n- Claims a privilege\n- Refuses to testify despite court order\n- Lacks memory\n- Death or illness\n- Cannot be procured by process or reasonable means\n\nUnavailability must not be caused by either party.","freq":"high","kws":["privilege","refuse","lack memory","death or ill","cannot be procured"],"mn":"","tr":""},{"id":"17","issue":"Former Testimony","rule":"Admissible if:\n1. Declarant **unavailable**\n2. Testimony at **prior proceeding or deposition**\n3. **Same issues** involved\n4. **Same motive and opportunity** to cross-examine\n\n- FRE civil: same party or predecessor in interest\n- CA civil: person with similar interest\n- Criminal: defendant personally must have had same motive","freq":"mid","kws":["unavailable","prior proceeding or deposition","same issues","same motive and opportunity","predecessor in interest","similar interest"],"mn":"","tr":""},{"id":"18","issue":"Dying Declaration","rule":"Admissible if:\n1. Declarant **unavailable**\n2. Statement under **belief of imminent death**\n3. Statement concerns **cause or circumstances** of impending death\n\n- FRE: homicide and civil cases only\n- CA: admissible in all cases","freq":"mid","kws":["unavailable","belief of imminent death","cause or circumstances","homicide prosecutions and civil cases"],"mn":"","tr":""},{"id":"19","issue":"Statement Against Interest","rule":"Admissible if:\n1. Declarant **unavailable**\n2. Against declarant's **pecuniary, proprietary, or penal interest**\n3. **Reasonable person** would not have made it unless believed true\n4. Declarant has **firsthand knowledge**\n\nCA: includes societal interests\nFRE criminal: requires corroborating evidence","freq":"high","kws":["unavailable","pecuniary","proprietary","penal interest","reasonable person","believed it to be true","firsthand knowledge","corroborating evidence"],"mn":"","tr":""},{"id":"20","issue":"Present Sense Impression","rule":"Admissible if:\n1. Statement **describes or explains** an event\n2. Made **while perceiving** the event or immediately thereafter\n\nCA: contemporaneous statement \u2014 only declarant's own conduct while engaged in it.","freq":"high","kws":["describe or explain an event","while perceiving","immediately thereafter","contemporaneous statement","own conduct"],"mn":"","tr":""},{"id":"21","issue":"Excited Utterance","rule":"Admissible if:\n1. A **startling event** occurred\n2. Statement **relates to** the event\n3. Made **under the stress of excitement**\n\nCA: called spontaneous statement.","freq":"high","kws":["startling event","relates to","under the stress of excitement","spontaneous statement"],"mn":"","tr":""},{"id":"22","issue":"Then-Existing State of Mind","rule":"Statement of declarant's **then-existing state of mind** (intent, plan, motive) or emotion/sensory/physical condition is admissible.\n\n**Does not apply** to statements of memory or belief.","freq":"high","kws":["then-existing state of mind","intent","plan","motive","does not apply to statement of memory or belief"],"mn":"","tr":""},{"id":"23","issue":"Medical Diagnosis or Treatment Statements","rule":"Admissible if made **for and reasonably pertinent to** medical diagnosis or treatment, describing medical history or symptoms.\n\nDoes not include statements of fault.","freq":"med","kws":["made for and reasonably pertinent to","medical diagnosis or treatment","describes medical history"],"mn":"","tr":""},{"id":"24","issue":"Past Recollection Recorded","rule":"Admissible if:\n1. Witness once had **personal knowledge**\n2. Witness **no longer remembers**\n3. Record made when **fresh in the mind**\n4. Record is **accurate**\n\nMay be read into evidence but only received as exhibit if offered by adverse party.","freq":"med","kws":["personal knowledge","no longer remember","fresh in the mind","accurate","read into evidence","adverse party"],"mn":"","tr":""},{"id":"25","issue":"Business Records","rule":"Admissible if:\n1. Made **at or near the time** of the event\n2. Made by person with **knowledge**\n3. Kept in **ordinary course** of business\n4. **Regular practice** to make such records\n\nCEC: does not include opinions or diagnoses.","freq":"high","kws":["at or near the time","ordinary course of business","regular practice"],"mn":"","tr":""},{"id":"26","issue":"Public Records","rule":"FRE admissible if describing:\n1. Policies and practices of public office\n2. Observations made under duty\n3. Factual findings from authorized investigation\n\nException: criminal cases cannot use police officer observations against defendant.\n\nCA: scope of duty + near the time + trustworthiness.","freq":"med","kws":["policies and practices","observations made under duty","factual findings","police officers against criminal defendant","scope of duty","trustworthiness"],"mn":"","tr":""},{"id":"27","issue":"Character Evidence \u2014 General Rule","rule":"Character evidence is **not admissible** to prove propensity, unless for **non-propensity purposes** or when **character is in issue**.\n\n- Reputation or Opinion: admissible in all instances\n- Specific Acts: only when character in issue, or on cross-examination","freq":"high","kws":["not admissible to prove propensity","non-propensity purposes","character in issue","reputation or opinion","specific acts","cross-examination"],"mn":"Direct = Rep/Opinion only; Cross = Can ask specific; No extrinsic; Unless issue/MIMIC/sex crimes","tr":""},{"id":"28","issue":"Character Evidence \u2014 Criminal Case","rule":"Defendant's character: D may offer own character; prosecution may rebut only if D opens the door.\n\nVictim's character:\n- General: D may offer; prosecution may rebut\n- Homicide: prosecution may offer victim's peacefulness if D claims victim was first aggressor\n- Sex offense: victim's sexual behavior generally inadmissible except past conduct with D, another caused injury, or constitutional rights","freq":"high","kws":["defendant may offer own character","prosecution cannot offer unless defendant opens door","victim character","first aggressor","victim peacefulness","sex offense","past conduct with defendant"],"mn":"","tr":""},{"id":"29","issue":"Character Evidence \u2014 Civil Cases","rule":"Character evidence **cannot** prove propensity in civil cases.\n\nSex-offense exception: only if probative value **substantially outweighs** risk of harm.\n\nReputation evidence only if victim put reputation in issue.","freq":"high","kws":["cannot prove propensity","sex-offense exception","substantially outweighs","reputation in issue"],"mn":"","tr":""},{"id":"30","issue":"Prior Bad Acts \u2014 MIMIC Rule","rule":"Other crimes/wrongs/acts **not admissible** to show propensity.\n\nAdmissible for non-propensity purposes:\n- Motive\n- Intent\n- Absence of Mistake\n- Identity\n- Common plan/scheme","freq":"high","kws":["not admissible to show propensity","motive","intent","mistake","identity","common plan"],"mn":"MIMIC","tr":""},{"id":"31","issue":"Habit and Routine Practice","rule":"Habit evidence admissible to show a person acted in conformity with the habit.\n\nHabit = regular response to a repeated specific situation, almost automatic.\n\nRoutine practice of an organization treated the same.","freq":"low","kws":["regular response","repeated situation","automatic","routine practice"],"mn":"","tr":""},{"id":"32","issue":"Lay Witness Competency","rule":"Lay witness must be **competent** and have **personal knowledge**.\n\nCompetency requires:\n- Oath to tell the truth\n- Capacity to perceive, recall, and communicate\n\nFRE: presumed competent except presiding judges and jurors.\nCA: must understand legal duty to tell truth.","freq":"high","kws":["competent","personal knowledge","oath","capacity to perceive","recall","communicate","presumed competent","legal duty"],"mn":"","tr":""},{"id":"33","issue":"Lay Opinion Rule","rule":"Lay witness may give opinion if:\n1. Rationally based on **own perception**\n2. **Helpful** to understanding testimony or determining a fact in issue\n3. Not based on scientific or specialized knowledge (FRE)","freq":"high","kws":["own perception","helpful","not based on scientific or specialized knowledge"],"mn":"","tr":""},{"id":"34","issue":"Expert Opinion Rule","rule":"Expert may testify if:\n1. **Qualified** by knowledge, skill, experience, training, or education\n2. Based on **sufficient facts or data**\n3. Product of **reliable principles and methods**\n4. Expert **reliably applied** those principles\n\nFRE: Daubert/Kumho \u2014 reliability of methodology\nCA: Kelly/Frye \u2014 general acceptance in scientific community","freq":"high","kws":["qualified","sufficient facts or data","reliable principles and methods","reliably applied","Daubert","Kelly/Frye","general acceptance"],"mn":"","tr":""},{"id":"35","issue":"Refreshing Recollection","rule":"Witness may use a writing to refresh memory if:\n1. Witness once had **personal knowledge**\n2. Witness currently **does not recall fully**\n3. Writing shown **solely to jog memory**\n4. Testimony comes from witness's **own recollection**","freq":"med","kws":["personal knowledge","does not recall fully","solely to jog memory","own recollection"],"mn":"","tr":""},{"id":"36","issue":"Trial Objections","rule":"- Narrative: calls for unfocused story\n- Unresponsive: answer doesn't directly respond\n- Compound: asks multiple things at once\n- Argumentative: designed to argue\n- Leading: suggests the answer; permitted on cross, not direct\n- Assumes facts not in evidence\n- Speculation: calls for a guess\n\nCA: leading on direct only in interests of justice","freq":"med","kws":["narrative","unresponsive","compound","argumentative","leading questions","cross examination","assumes facts not in evidence","speculation","interests of justice"],"mn":"NUCALF","tr":""},{"id":"37","issue":"Impeachment \u2014 General Rule","rule":"Witness may be impeached by:\n- Prior inconsistent statements\n- Prior bad acts\n- Prior convictions\n- Bias\n- Character for untruthfulness\n- Defects in perception or memory","freq":"high","kws":["prior inconsistent statements","prior bad acts","prior convictions","bias","character for untruthfulness","perception or memory"],"mn":"","tr":""},{"id":"38","issue":"Impeachment \u2014 Prior Inconsistent Statement","rule":"PIS admissible to **impeach**.\n\nExtrinsic evidence admissible only if relevant to material issue AND witness given opportunity to explain or deny.\n\nFRE: PIS admissible for truth only if made **under oath** at prior proceeding.\nCA: PIS admissible for both impeachment and truth, regardless of oath.","freq":"high","kws":["admissible to impeach","extrinsic evidence","material issue","opportunity to explain or deny","admissible for truth","under oath","both impeachment and truth"],"mn":"","tr":""},{"id":"39","issue":"Impeachment \u2014 Prior Criminal Convictions","rule":"FRE:\n1. Felonies not involving dishonesty: admissible if witness not defendant (FRE 403); if defendant, only if probative outweighs prejudice\n2. Dishonesty convictions: always admissible\n3. Older than 10 years: not admissible unless probative substantially outweighs AND proper notice\n\nCA: moral turpitude felonies in civil and criminal; misdemeanors in criminal only (Prop 8)","freq":"med","kws":["felonies not involving dishonesty","probative outweighs prejudice","dishonesty always admissible","10 years","proper notice","moral turpitude"],"mn":"","tr":""},{"id":"40","issue":"Impeachment \u2014 Specific Acts","rule":"May be asked on **cross-examination only** if probative of character for truthfulness.\n\n**Extrinsic evidence never admissible** \u2014 must take witness's answer.\n\nCA: generally inadmissible. Prop 8: moral turpitude acts may be used; extrinsic evidence allowed on cross.","freq":"med","kws":["cross-examination only","extrinsic evidence never admissible","moral turpitude","prop 8"],"mn":"","tr":""},{"id":"41","issue":"Bias","rule":"Evidence of **bias or interest** is always relevant and may be proved by **extrinsic evidence**.","freq":"low","kws":["bias or interest","always relevant","extrinsic evidence allowed"],"mn":"","tr":""},{"id":"42","issue":"Authentication \u2014 General Rule","rule":"Evidence is admissible only if **authenticated**.\n\nSatisfied by evidence sufficient to **support a finding** that the item is what the proponent claims.","freq":"high","kws":["authenticated","evidence sufficient","support a finding","what proponent claims"],"mn":"","tr":""},{"id":"43","issue":"Authentication \u2014 Physical Evidence","rule":"Authenticated by:\n1. Testimony of **witness with knowledge**\n2. **Distinctive characteristic** or **chain of custody**","freq":"high","kws":["witness with knowledge","distinctive characteristic","chain of custody"],"mn":"","tr":""},{"id":"44","issue":"Authentication \u2014 Voice Recording","rule":"Voice authenticated by **opinion testimony** of a witness familiar with the voice, from hearing it **at any time**.","freq":"med","kws":["opinion testimony","witness familiar with voice","at any time"],"mn":"","tr":""},{"id":"45","issue":"Best Evidence Rule","rule":"To prove the **content** of a writing, recording, or photograph, the **original is required**.\n\nDuplicate admissible unless: genuine question about authenticity, or unfair.\n\nCA: Duplicates generally not admissible unless copy is accurate and valid reason for missing original.","freq":"high","kws":["prove content","writing","recording","original required","duplicate","authenticity","CA duplicate inadmissible"],"mn":"","tr":""},{"id":"46","issue":"Judicial Notice","rule":"Court may take judicial notice of **indisputable facts** that are:\n1. Commonly known in the community\n2. Readily capable of verification\n\nMay be taken at any stage.\n\nFRE civil: conclusive. FRE criminal: jury may or may not accept.\nCA: conclusive in both civil and criminal cases.","freq":"med","kws":["indisputable facts","commonly known","readily capable of verification","any stage","FRE civil conclusive","CA conclusive"],"mn":"","tr":""}];
 
-const SRS_STEPS = [1,2,4,7,14,30,60];
+var idx = 0;
+var SRS = [1,2,4,7,14,30,60];
+var isFlipped = false;
+var curMode = 'flip';
 
-// Initialize cards with status from localStorage
-let cards = RAW.map((c,i) => {
-  const saved = loadCard(i);
-  return {
-    ...c,
-    _i: i,
-    status: saved.status || 'due',
-    interval: saved.interval || 0,
-    nextReview: saved.nextReview || null,
-    // normalize frequency
-    freq: (c.frequency||'').toLowerCase().replace('medium','mid'),
-  };
-});
-
-// ── Filters & State ──
-let filtered = [];
-let idx = 0;
-let mode = 'flip';
-let isFlipped = false;
-let freqFilter = 'all';
-let statusFilter = 'all';
-
-// ── localStorage ──
-function saveCard(i) {
-  const c = cards[i];
-  try {
-    localStorage.setItem('card_'+i, JSON.stringify({ status: c.status, interval: c.interval, nextReview: c.nextReview, issue: c.issue, rule: c.rule, frequency: c.frequency, keywords: c.keywords, mnemonic: c.mnemonic, trigger: c.trigger, freq: c.freq }));
-  } catch(e) {}
+function getState(id) {
+  try { var s = localStorage.getItem('lb_'+id); return s ? JSON.parse(s) : {status:'due',interval:0,note:''}; } catch(e) { return {status:'due',interval:0,note:''}; }
 }
-function loadCard(i) {
-  try {
-    const s = localStorage.getItem('card_'+i);
-    return s ? JSON.parse(s) : {};
-  } catch(e) { return {}; }
-}
-// Merge saved edits back
-cards.forEach((c,i) => {
-  const s = loadCard(i);
-  if (s.rule) c.rule = s.rule;
-  if (s.issue) c.issue = s.issue;
-  if (s.keywords) c.keywords = s.keywords;
-  if (s.mnemonic) c.mnemonic = s.mnemonic;
-  if (s.trigger) c.trigger = s.trigger;
-  if (s.freq) c.freq = s.freq;
-  if (s.frequency) c.frequency = s.frequency;
-});
-
-// ── Keyword matching (semantic-ish) ──
-function normalize(str) {
-  return str.toLowerCase()
-    .replace(/['']/g,"'")
-    .replace(/[^a-z0-9\s']/g,' ')
-    .replace(/\s+/g,' ').trim();
+function setState(id, data) {
+  try { localStorage.setItem('lb_'+id, JSON.stringify(data)); } catch(e) {}
 }
 
-// Simple synonym map for common legal variations
-const SYNONYMS = {
-  'inadmissible': ['not admissible','excluded','cannot be admitted'],
-  'not admissible': ['inadmissible','excluded'],
-  'probative': ['probative value','relevance'],
-  'prejudicial': ['unfair prejudice','prejudice'],
-  'culpable': ['liable','negligent','at fault'],
-  'deceased': ['dead','death','died'],
-  'imminent': ['immediate','impending'],
-  'pecuniary': ['financial','monetary','economic'],
-  'penal': ['criminal','prison'],
-  'proprietary': ['property','ownership'],
-  'corroborate': ['corroborating','support','confirm'],
-  'authenticated': ['authentication','verify','verified'],
-};
-
-function kwMatches(input, kw) {
-  const normInput = normalize(input);
-  const normKw = normalize(kw);
-  if (normInput.includes(normKw)) return true;
-  // check synonyms
-  for (const [key, syns] of Object.entries(SYNONYMS)) {
-    if (normKw.includes(normalize(key))) {
-      for (const syn of syns) {
-        if (normInput.includes(normalize(syn))) return true;
-      }
-    }
-    for (const syn of syns) {
-      if (normKw.includes(normalize(syn)) && normInput.includes(normalize(key))) return true;
-    }
-  }
-  // word overlap: if kw is multi-word, check if most words appear
-  const kwWords = normKw.split(' ').filter(w => w.length > 3);
-  if (kwWords.length >= 2) {
-    const hits = kwWords.filter(w => normInput.includes(w));
-    if (hits.length / kwWords.length >= 0.6) return true;
+function norm(s) {
+  return s.toLowerCase().replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+}
+function kwMatch(input, kw) {
+  var ni = norm(input), nk = norm(kw);
+  if (ni.indexOf(nk) >= 0) return true;
+  var words = nk.split(' ').filter(function(w){ return w.length > 3; });
+  if (words.length >= 2) {
+    var hits = words.filter(function(w){ return ni.indexOf(w) >= 0; });
+    if (hits.length / words.length >= 0.6) return true;
   }
   return false;
 }
 
-// ── Filters ──
-function setFreq(f, el) {
-  freqFilter = f;
-  document.querySelectorAll('#freqFilters .pill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  applyFilters();
-}
-function setStatus(s, el) {
-  statusFilter = s;
-  document.querySelectorAll('#statusFilters .pill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  applyFilters();
-}
-function applyFilters() {
-  const q = document.getElementById('searchInput').value.toLowerCase().trim();
-  filtered = cards.filter(c => {
-    const fq = freqFilter === 'all' || c.freq === freqFilter || (freqFilter==='mid' && (c.freq==='mid'||c.freq==='med'||c.freq==='medium'));
-    const st = statusFilter === 'all' || c.status === statusFilter;
-    const qs = !q || c.issue.toLowerCase().includes(q) || c.rule.toLowerCase().includes(q);
-    return fq && st && qs;
-  });
-  idx = Math.min(idx, Math.max(0, filtered.length - 1));
-  updateStats();
-  renderCard();
-}
-
-// ── Stats ──
-function updateStats() {
-  const all = cards;
-  document.getElementById('sTotal').textContent = filtered.length;
-  document.getElementById('sMastered').textContent = all.filter(c=>c.status==='mastered').length;
-  document.getElementById('sReview').textContent = all.filter(c=>c.status==='review').length;
-  document.getElementById('sDue').textContent = all.filter(c=>c.status==='due').length;
-  const pct = Math.round(all.filter(c=>c.status==='mastered').length / all.length * 100);
-  document.getElementById('progFill').style.width = pct + '%';
-  document.getElementById('footerCount').textContent = all.length;
-}
-
-// ── Render ──
-function md(text) {
+function renderMd(text) {
   if (!text) return '';
-  return marked.parse(text, { breaks: true, gfm: true });
-}
-
-function freqClass(c) {
-  const f = (c.freq||c.frequency||'').toLowerCase();
-  if (f==='high') return 'high';
-  if (f==='low') return 'low';
-  return 'mid';
-}
-
-function renderExtras(card, containerId) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  const parts = [];
-  if (card.mnemonic) parts.push(`<div class="extra-block"><div class="extra-label mnemonic">Mnemonic</div><div class="extra-val mnemonic">${card.mnemonic.replace(/\n/g,'<br>')}</div></div>`);
-  if (card.trigger) parts.push(`<div class="extra-block"><div class="extra-label trigger">Trigger Fact</div><div class="extra-val trigger">${card.trigger.replace(/\n/g,'<br>')}</div></div>`);
-  el.innerHTML = parts.length ? parts.join('') : '';
-  el.style.display = parts.length ? '' : 'none';
-}
-
-function renderCard() {
-  if (!filtered.length) {
-    document.getElementById('cardIssue').textContent = 'No cards match filters';
-    document.getElementById('cardRule').innerHTML = '';
-    document.getElementById('cardCounter').textContent = '0 / 0';
-    document.getElementById('rCounter').textContent = '0 / 0';
-    return;
+  var lines = text.split('\n');
+  var out = [], inOl = false, inUl = false;
+  function inl(s) {
+    return s.replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>')
+            .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+            .replace(/\*(.+?)\*/g,'<em>$1</em>');
   }
-  const c = filtered[idx];
-  const fc = freqClass(c);
-  const counter = `${idx+1} / ${filtered.length}`;
+  function cl() {
+    if (inOl) { out.push('</ol>'); inOl=false; }
+    if (inUl) { out.push('</ul>'); inUl=false; }
+  }
+  for (var i=0;i<lines.length;i++) {
+    var t=lines[i].trim();
+    if (!t) { cl(); out.push('<div style="height:.3rem"></div>'); continue; }
+    if (/^---+$/.test(t)) { cl(); out.push('<hr style="border:none;border-top:0.5px solid var(--color-border-tertiary);margin:.5rem 0">'); continue; }
+    var olm=t.match(/^(\d+)\.\s+(.*)/);
+    if (olm) { if(inUl){out.push('</ul>');inUl=false;} if(!inOl){out.push('<ol>');inOl=true;} out.push('<li>'+inl(olm[2])+'</li>'); continue; }
+    var ulm=t.match(/^[-*]\s+(.*)/);
+    if (ulm) { if(inOl){out.push('</ol>');inOl=false;} if(!inUl){out.push('<ul>');inUl=true;} out.push('<li>'+inl(ulm[1])+'</li>'); continue; }
+    cl(); out.push('<p>'+inl(t)+'</p>');
+  }
+  cl();
+  return out.join('');
+}
 
-  // Flip mode
-  document.getElementById('freqDot').className = `freq-dot ${fc}`;
-  document.getElementById('freqDot2').className = `freq-dot ${fc}`;
-  document.getElementById('cardNum').textContent = `#${c.id}`;
-  document.getElementById('cardNum2').textContent = `#${c.id}`;
-  document.getElementById('cardIssue').textContent = c.issue;
-  document.getElementById('cardRule').innerHTML = md(c.rule);
-  document.getElementById('cardCounter').textContent = counter;
-  renderExtras(c, 'cardExtras');
+function setFreqEl(id, freq) {
+  var el = document.getElementById(id);
+  var lbl = freq==='high'?'High':freq==='low'?'Low':'Mid';
+  var cls = freq==='high'?'high':freq==='low'?'low':'mid';
+  el.textContent = lbl;
+  el.className = 'freq '+cls;
+}
 
-  const srsLabels = { mastered:`Mastered · next in ${c.interval}d`, review:'Queued for review', due:'Due today' };
-  document.getElementById('srsChip').textContent = srsLabels[c.status] || '';
-
-  // Recall mode
-  document.getElementById('rFreqDot').className = `freq-dot ${fc}`;
-  document.getElementById('rCardNum').textContent = `#${c.id}`;
+function render() {
+  var c = CARDS[idx];
+  var st = getState(c.id);
+  setFreqEl('fFreq1', c.freq); setFreqEl('fFreq2', c.freq); setFreqEl('rFreq', c.freq);
+  document.getElementById('fNum1').textContent = '#'+c.id;
+  document.getElementById('fNum2').textContent = '#'+c.id;
+  document.getElementById('rNum').textContent = '#'+c.id;
+  document.getElementById('fIssue').textContent = c.issue;
   document.getElementById('rIssue').textContent = c.issue;
-  document.getElementById('rCounter').textContent = counter;
-  document.getElementById('recallInput').value = '';
-  document.getElementById('feedback').style.display = 'none';
-  document.getElementById('ruleReveal').style.display = 'none';
-
+  document.getElementById('fRule').innerHTML = renderMd(c.rule);
+  document.getElementById('navCtr').textContent = (idx+1)+' / '+CARDS.length;
+  var extras = '';
+  if (c.mn) extras += '<div><div class="ex-lbl">Mnemonic</div><div class="ex-val">'+c.mn.replace(/\n/g,'<br>')+'</div></div>';
+  if (c.tr) extras += '<div style="margin-top:.5rem"><div class="ex-lbl">Trigger</div><div style="font-size:.8rem;line-height:1.5;color:var(--color-text-secondary)">'+c.tr.replace(/\n/g,'<br>')+'</div></div>';
+  document.getElementById('fExtras').innerHTML = extras ? '<div style="margin-top:.8rem;padding-top:.8rem;border-top:0.5px solid var(--color-border-tertiary)">'+extras+'</div>' : '';
+  document.getElementById('noteArea').value = st.note || '';
+  var srsMap = {mastered:'Mastered · next in '+st.interval+'d', review:'Queued for review', due:'Due today'};
+  document.getElementById('srsChip').textContent = srsMap[st.status] || '';
+  document.getElementById('rInp').value = '';
+  document.getElementById('fbWrap').style.display = 'none';
+  document.getElementById('ckBtn').disabled = false;
+  document.getElementById('ckBtn').style.opacity = '1';
   isFlipped = false;
-  document.getElementById('cardInner').classList.remove('flipped');
+  document.getElementById('flipInner').classList.remove('flipped');
 }
 
-// ── Navigation ──
-function flipCard() {
+document.getElementById('flipWrap').addEventListener('click', function() {
   isFlipped = !isFlipped;
-  document.getElementById('cardInner').classList.toggle('flipped', isFlipped);
-}
-function nextCard() {
-  if (!filtered.length) return;
-  idx = (idx + 1) % filtered.length;
-  renderCard();
-}
-function prevCard() {
-  if (!filtered.length) return;
-  idx = (idx - 1 + filtered.length) % filtered.length;
-  renderCard();
-}
-
-// ── Keyboard ──
-document.addEventListener('keydown', e => {
-  if (document.getElementById('editOverlay').classList.contains('open')) return;
-  if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
-  if (e.key === 'ArrowRight' || e.key === 'l') nextCard();
-  if (e.key === 'ArrowLeft' || e.key === 'h') prevCard();
-  if (e.key === ' ' || e.key === 'f') { e.preventDefault(); if (mode==='flip') flipCard(); }
-  if (e.key === '1') markCard('mastered');
-  if (e.key === '2') markCard('review');
-  if (e.key === '3') markCard('due');
+  document.getElementById('flipInner').classList.toggle('flipped', isFlipped);
 });
 
-// ── Mark SRS ──
-function markCard(status) {
-  if (!filtered.length) return;
-  const c = filtered[idx];
-  c.status = status;
-  if (status === 'mastered') {
-    const cur = SRS_STEPS.indexOf(c.interval);
-    c.interval = SRS_STEPS[Math.min(cur+1, SRS_STEPS.length-1)] || SRS_STEPS[0];
-  } else if (status === 'due') {
-    c.interval = 0;
-  } else {
-    c.interval = c.interval || SRS_STEPS[0];
+document.getElementById('ckBtn').addEventListener('click', function() {
+  var c = CARDS[idx];
+  var input = document.getElementById('rInp').value;
+  var kws = c.kws || [];
+  var hits = [], misses = [];
+  for (var i=0;i<kws.length;i++) {
+    if (kwMatch(input,kws[i])) hits.push(kws[i]); else misses.push(kws[i]);
   }
-  saveCard(c._i);
-  updateStats();
-  setTimeout(nextCard, 250);
-}
-
-// ── Mode ──
-function setMode(m, el) {
-  mode = m;
-  document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('flipMode').style.display = m==='flip' ? '' : 'none';
-  document.getElementById('recallMode').style.display = m==='recall' ? '' : 'none';
-  renderCard();
-}
-
-// ── Recall check ──
-function checkRecall() {
-  if (!filtered.length) return;
-  const c = filtered[idx];
-  const input = document.getElementById('recallInput').value;
-  const kws = c.keywords || [];
-  if (!kws.length) {
-    document.getElementById('feedback').className = 'feedback partial';
-    document.getElementById('feedback').style.display = '';
-    document.getElementById('fbScore').className = 'fb-score partial';
-    document.getElementById('fbScore').textContent = 'No keywords set';
-    document.getElementById('fbMsg').textContent = 'Add keywords in the Edit panel to enable scoring.';
-    document.getElementById('kwTags').innerHTML = '';
-    return;
-  }
-  const hits = kws.filter(kw => kwMatches(input, kw));
-  const misses = kws.filter(kw => !kwMatches(input, kw));
-  const pct = Math.round(hits.length / kws.length * 100);
-  const cls = pct >= 80 ? 'good' : pct >= 50 ? 'partial' : 'miss';
-  const msgs = { good:'Excellent recall!', partial:'Partial — review the missing elements.', miss:'Keep practicing — more elements needed.' };
-
-  const fb = document.getElementById('feedback');
-  fb.className = `feedback ${cls}`;
-  fb.style.display = '';
-
-  document.getElementById('fbScore').className = `fb-score ${cls}`;
-  document.getElementById('fbScore').textContent = `${pct}% covered (${hits.length}/${kws.length} elements)`;
-  document.getElementById('fbMsg').textContent = msgs[cls];
-
-  const tagsHtml = [
-    ...hits.map(k => `<span class="kw-tag hit">✓ ${k}</span>`),
-    ...misses.map(k => `<span class="kw-tag miss">✗ ${k}</span>`),
-  ].join('');
-  document.getElementById('kwTags').innerHTML = tagsHtml;
-
-  // Reveal rule
-  const rr = document.getElementById('ruleReveal');
-  document.getElementById('rRuleBody').innerHTML = md(c.rule);
-  renderExtras(c, 'rExtras');
-  rr.style.display = '';
-}
-
-// ── Edit ──
-function openEdit() {
-  if (!filtered.length) return;
-  const c = filtered[idx];
-  document.getElementById('editIssue').value = c.issue;
-  document.getElementById('editRule').value = c.rule;
-  document.getElementById('editFreq').value = c.freq || 'mid';
-  document.getElementById('editKeywords').value = (c.keywords||[]).join(', ');
-  document.getElementById('editMnemonic').value = c.mnemonic || '';
-  document.getElementById('editTrigger').value = c.trigger || '';
-  document.getElementById('editOverlay').classList.add('open');
-}
-function closeEdit() {
-  document.getElementById('editOverlay').classList.remove('open');
-}
-function saveEdit() {
-  if (!filtered.length) return;
-  const c = filtered[idx];
-  c.issue = document.getElementById('editIssue').value.trim();
-  c.rule = document.getElementById('editRule').value.trim();
-  c.freq = document.getElementById('editFreq').value;
-  c.frequency = c.freq;
-  c.keywords = document.getElementById('editKeywords').value.split(',').map(k=>k.trim()).filter(Boolean);
-  c.mnemonic = document.getElementById('editMnemonic').value.trim();
-  c.trigger = document.getElementById('editTrigger').value.trim();
-  saveCard(c._i);
-  closeEdit();
-  renderCard();
-}
-document.getElementById('editOverlay').addEventListener('click', e => {
-  if (e.target === document.getElementById('editOverlay')) closeEdit();
+  var pct = kws.length>0 ? Math.round(hits.length/kws.length*100) : 0;
+  var cls = pct>=80?'g':pct>=50?'p':'m';
+  var vmap = {g:'Excellent recall!',p:'Partial \u2014 review the gaps.',m:'Keep practicing.'};
+  document.getElementById('fbWrap').style.display = '';
+  document.getElementById('fbTop').className = 'fbtop '+cls;
+  document.getElementById('fbPct').className = 'fbpct '+cls;
+  document.getElementById('fbPct').textContent = pct+'%';
+  document.getElementById('fbV').textContent = vmap[cls];
+  document.getElementById('fbS').textContent = hits.length+' of '+kws.length+' key elements covered.';
+  var hEl=document.getElementById('kwH'); hEl.innerHTML='';
+  if (!hits.length) { hEl.innerHTML='<span style="font-size:.72rem;color:var(--color-text-tertiary)">None</span>'; }
+  else { for(var i=0;i<hits.length;i++){var sp=document.createElement('span');sp.className='ktag h';sp.textContent='\u2713 '+hits[i];hEl.appendChild(sp);} }
+  var mEl=document.getElementById('kwM'); mEl.innerHTML='';
+  if (!misses.length) { mEl.innerHTML='<span style="font-size:.72rem;color:var(--color-text-tertiary)">None</span>'; }
+  else { for(var i=0;i<misses.length;i++){var sp=document.createElement('span');sp.className='ktag m2';sp.textContent='\u2717 '+misses[i];mEl.appendChild(sp);} }
+  document.getElementById('againEl').style.display = pct<80?'':'none';
+  document.getElementById('rRuleBody').innerHTML = renderMd(c.rule);
+  document.getElementById('ckBtn').disabled = true;
+  document.getElementById('ckBtn').style.opacity = '.4';
 });
 
-// ── Init ──
-applyFilters();
-</script>
+document.getElementById('noteBtn').addEventListener('click', function() {
+  var c=CARDS[idx]; var st=getState(c.id);
+  st.note = document.getElementById('noteArea').value;
+  setState(c.id,st);
+  document.getElementById('noteBtn').textContent='Saved \u2713';
+  setTimeout(function(){ document.getElementById('noteBtn').textContent='Save note'; },1500);
+});
 
+document.getElementById('prevBtn').addEventListener('click', function() { idx=(idx-1+CARDS.length)%CARDS.length; render(); });
+document.getElementById('nextBtn').addEventListener('click', function() { idx=(idx+1)%CARDS.length; render(); });
 
+document.getElementById('btnMs').addEventListener('click', function() {
+  var c=CARDS[idx],st=getState(c.id);
+  st.status='mastered'; var i=SRS.indexOf(st.interval); st.interval=SRS[Math.min(i+1,SRS.length-1)]||SRS[0];
+  setState(c.id,st); idx=(idx+1)%CARDS.length; render();
+});
+document.getElementById('btnRv').addEventListener('click', function() {
+  var c=CARDS[idx],st=getState(c.id);
+  st.status='review'; st.interval=st.interval||SRS[0];
+  setState(c.id,st); idx=(idx+1)%CARDS.length; render();
+});
+document.getElementById('btnDu').addEventListener('click', function() {
+  var c=CARDS[idx],st=getState(c.id);
+  st.status='due'; st.interval=0;
+  setState(c.id,st); idx=(idx+1)%CARDS.length; render();
+});
+
+document.getElementById('tabFlip').addEventListener('click', function() {
+  curMode='flip';
+  document.getElementById('tabFlip').className='tab on';
+  document.getElementById('tabRecall').className='tab';
+  document.getElementById('modeFlip').style.display='';
+  document.getElementById('modeRecall').style.display='none';
+  render();
+});
+document.getElementById('tabRecall').addEventListener('click', function() {
+  curMode='recall';
+  document.getElementById('tabRecall').className='tab on';
+  document.getElementById('tabFlip').className='tab';
+  document.getElementById('modeRecall').style.display='';
+  document.getElementById('modeFlip').style.display='none';
+  render();
+});
+
+render();
 </script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});}</script>
 </body>
 </html>
